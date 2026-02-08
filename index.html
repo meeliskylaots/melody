@@ -70,10 +70,9 @@
         .marquee-content {
             display: inline-block;
             animation: marquee 25s linear infinite;
-            padding-left: 100%; /* Alustab ekraani paremast servast */
+            padding-left: 100%;
         }
 
-        /* Peata animatsioon hiirega peale minnes */
         .marquee-content:hover {
             animation-play-state: paused;
         }
@@ -87,24 +86,24 @@
 <body class="bg-black h-screen w-full flex flex-col md:flex-row overflow-hidden">
 
     <!-- VASAK POOL: VISUAAL -->
-    <div class="relative w-full md:w-5/12 lg:w-1/2 h-1/3 md:h-full flex-shrink-0 bg-gray-900">
-        <!-- Pilt laetakse otse failist 'melody.jpg'. 
-             Veendu, et fail on GitHubis täpselt selle nimega (väiksed tähed). -->
+    <!-- PARANDUS: Suurendasin mobiilis pildi ala kõrgust (h-2/5) ja lisasin object-top -->
+    <div class="relative w-full md:w-5/12 lg:w-1/2 h-2/5 md:h-full flex-shrink-0 bg-gray-900">
         <img id="main-band-image" 
              src="melody.jpg" 
-             class="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-700" 
+             class="absolute inset-0 w-full h-full object-cover object-top opacity-90 transition-opacity duration-700" 
              alt="Meelis Külaots ja Marko Must"
              onerror="this.src='https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070'">
         
         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/70 to-transparent p-6 md:p-10">
-            <!-- PARANDUS: Väiksem tekst ja tähevahe mobiilis, et mahuks ühele reale -->
-            <p class="text-[16px] sm:text-sm font-bold tracking-widest sm:tracking-[0.3em] uppercase text-gray-400 mb-2 whitespace-nowrap">Meelis Külaots & Marko Must</p>
+            <!-- PARANDUS: Väiksem tekst mobiilis (text-[10px]) ja ühel real (whitespace-nowrap) -->
+            <p class="text-[10px] sm:text-sm font-bold tracking-widest sm:tracking-[0.3em] uppercase text-gray-400 mb-2 whitespace-nowrap">Meelis Külaots & Marko Must</p>
             <h1 class="text-5xl md:text-7xl font-black tracking-tighter text-white">MELODY</h1>
         </div>
     </div>
 
     <!-- PAREM POOL: INFO -->
-    <div class="w-full md:w-7/12 lg:w-1/2 h-2/3 md:h-full overflow-y-auto bg-[#0a0a0a] border-l border-white/10 relative">
+    <!-- PARANDUS: Kohandasin sisu kõrgust vastavalt pildi uuele kõrgusele (h-3/5) -->
+    <div class="w-full md:w-7/12 lg:w-1/2 h-3/5 md:h-full overflow-y-auto bg-[#0a0a0a] border-l border-white/10 relative">
         <div class="p-6 md:p-10 lg:p-12 max-w-2xl mx-auto flex flex-col gap-10">
             
             <!-- 1. Videod -->
@@ -125,7 +124,6 @@
                 <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
                     <i data-lucide="calendar" class="w-5 h-5 text-gray-400"></i> Tulevased esinemised
                 </h3>
-                <!-- Jooksev tekst asub siin -->
                 <div class="glass-panel rounded-xl p-4 marquee-container bg-white/5">
                     <div id="events-list" class="marquee-content text-lg"></div>
                 </div>
@@ -161,7 +159,6 @@
                     <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white group-hover:text-black transition"><i data-lucide="mail"></i></div>
                     <div class="min-w-0">
                         <p class="text-xs text-gray-500 uppercase font-bold">Kirjuta</p>
-                        <!-- Parandus: väiksem tekst ja whitespace-nowrap hoiab ühel real -->
                         <p class="font-medium text-xs sm:text-sm whitespace-nowrap overflow-hidden text-ellipsis">ansambelmelody@gmail.com</p>
                     </div>
                 </a>
@@ -197,7 +194,6 @@
             return url;
         }
 
-        // CSV Parsimine
         function parseCSV(text) {
             const lines = text.trim().split('\n');
             const result = [];
@@ -232,16 +228,11 @@
         }
 
         async function loadData() {
-            // Pildi loogika: 
-            // Vaikimisi loeb src="melody.jpg". 
-            // Me EI kirjuta seda enam JS-iga üle, v.a kui tabelis on "melody päis".
-
             if (!SHEET_CSV_URL) {
                 renderMockData();
                 return;
             }
             try {
-                // Lisame timestamp'i, et vältida vahemälu probleeme
                 const response = await fetch(SHEET_CSV_URL + '&t=' + Date.now());
                 const csvText = await response.text();
                 const data = parseCSV(csvText);
@@ -297,10 +288,8 @@
                         </div>
                     `;
                 } 
-                // Esinemiste renderdamine jooksva tekstina
                 else if (section === 'esinemine' || section === 'melody esinemine') {
                     hasEvents = true;
-                    // Lisame vahele eraldaja
                     eventsList.innerHTML += `
                         <span class="inline-flex items-center mx-8">
                             <span class="font-bold text-white mr-2">${title}</span>
@@ -335,3 +324,5 @@
     </script>
 </body>
 </html>
+
+
