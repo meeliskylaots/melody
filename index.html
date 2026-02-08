@@ -57,13 +57,39 @@
             width: 100%;
             height: 100%;
         }
+
+        /* --- Jooksev tekst (Marquee) --- */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+            padding-left: 100%; /* Alustab ekraani paremast servast */
+        }
+
+        /* Peata animatsioon hiirega peale minnes */
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body class="bg-black h-screen w-full flex flex-col md:flex-row overflow-hidden">
 
     <!-- VASAK POOL: VISUAAL -->
     <div class="relative w-full md:w-5/12 lg:w-1/2 h-1/3 md:h-full flex-shrink-0 bg-gray-900">
-        <!-- Pilt laetakse nüüd failist 'melody.jpg' -->
+        <!-- Pilt laetakse otse failist 'melody.jpg'. 
+             Veendu, et fail on GitHubis täpselt selle nimega (väiksed tähed). -->
         <img id="main-band-image" 
              src="melody.jpg" 
              class="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-700" 
@@ -80,7 +106,7 @@
     <div class="w-full md:w-7/12 lg:w-1/2 h-2/3 md:h-full overflow-y-auto bg-[#0a0a0a] border-l border-white/10 relative">
         <div class="p-6 md:p-10 lg:p-12 max-w-2xl mx-auto flex flex-col gap-10">
             
-            <!-- 1. Videod (Esimene sektsioon) -->
+            <!-- 1. Videod -->
             <div>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold">Live hetked</h3>
@@ -93,12 +119,15 @@
                 </div>
             </div>
 
-            <!-- 2. Tulevased esinemised -->
+            <!-- 2. Tulevased esinemised (JOOKSEV TEKST) -->
             <div id="events-section" class="hidden">
                 <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
                     <i data-lucide="calendar" class="w-5 h-5 text-gray-400"></i> Tulevased esinemised
                 </h3>
-                <div id="events-list" class="glass-panel rounded-xl p-6 space-y-4"></div>
+                <!-- Jooksev tekst asub siin -->
+                <div class="glass-panel rounded-xl p-4 marquee-container bg-white/5">
+                    <div id="events-list" class="marquee-content text-lg"></div>
+                </div>
             </div>
 
             <!-- 3. Sissejuhatus & Lubadused -->
@@ -152,9 +181,6 @@
         // --- SEADISTUSED ---
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv'; 
         
-        // Pildi fallback variant
-        const FALLBACK_IMAGE_ID = '1kY7moW37Z_2DyyKKwYPnDEHgoIeIDZ3J';
-
         function getDriveDirectLink(id) {
              return `https://drive.google.com/uc?export=view&id=${id}`;
         }
@@ -204,8 +230,9 @@
         }
 
         async function loadData() {
-            // Esmalt proovime laadida kohalikku faili, kui see ei õnnestu, töötab img onerror
-            // (Vaata HTML-i img tagi)
+            // Pildi loogika: 
+            // Vaikimisi loeb src="melody.jpg". 
+            // Me EI kirjuta seda enam JS-iga üle, v.a kui tabelis on "melody päis".
 
             if (!SHEET_CSV_URL) {
                 renderMockData();
@@ -268,15 +295,17 @@
                         </div>
                     `;
                 } 
-                // Kontrollime nii 'esinemine' kui 'melody esinemine'
+                // Esinemiste renderdamine jooksva tekstina
                 else if (section === 'esinemine' || section === 'melody esinemine') {
                     hasEvents = true;
+                    // Lisame vahele eraldaja
                     eventsList.innerHTML += `
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 last:border-0 pb-3 last:pb-0 mb-3 last:mb-0">
-                            <span class="font-bold text-white text-lg w-32 flex-shrink-0">${title}</span>
-                            <span class="text-gray-400 text-sm sm:text-right flex-grow">${content}</span>
-                            ${url ? `<a href="${url}" target="_blank" class="mt-2 sm:mt-0 sm:ml-4 text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded transition whitespace-nowrap">Info</a>` : ''}
-                        </div>
+                        <span class="inline-flex items-center mx-8">
+                            <span class="font-bold text-white mr-2">${title}</span>
+                            <span class="text-gray-300">${content}</span>
+                            ${url ? `<a href="${url}" target="_blank" class="ml-2 text-xs bg-white/20 hover:bg-white/40 text-white px-2 py-0.5 rounded transition">Info</a>` : ''}
+                        </span>
+                        <span class="text-white/20 mx-2">•</span>
                     `;
                 }
             });
@@ -290,7 +319,8 @@
             const mock = [
                 { section: 'Melody live', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
                 { section: 'Melody live', url: 'https://youtube.com/shorts/hszrt39a2CA' },
-                { section: 'Esinemine', title: '22.02.2026', content: 'Varese külalistemaja', url: '' }
+                { section: 'Esinemine', title: '22.02.2026', content: 'Varese külalistemaja' },
+                { section: 'Esinemine', title: '24.06.2026', content: 'Jaanipäev Pärnus' }
             ];
             renderData(mock);
         }
