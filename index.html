@@ -63,9 +63,9 @@
 
     <!-- VASAK POOL: VISUAAL -->
     <div class="relative w-full md:w-5/12 lg:w-1/2 h-1/3 md:h-full flex-shrink-0 bg-gray-900">
-        <!-- Pilt laetakse JavaScriptiga (Tabelist või varuvariandina) -->
+        <!-- Pilt laetakse nüüd failist 'melody.jpg' -->
         <img id="main-band-image" 
-             src="" 
+             src="melody.jpg" 
              class="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-700" 
              alt="Meelis Külaots ja Marko Must"
              onerror="this.src='https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070'">
@@ -80,7 +80,28 @@
     <div class="w-full md:w-7/12 lg:w-1/2 h-2/3 md:h-full overflow-y-auto bg-[#0a0a0a] border-l border-white/10 relative">
         <div class="p-6 md:p-10 lg:p-12 max-w-2xl mx-auto flex flex-col gap-10">
             
-            <!-- 1. Sissejuhatus & Lubadused -->
+            <!-- 1. Videod (Esimene sektsioon) -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold">Live hetked</h3>
+                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-xs text-gray-400 hover:text-white flex items-center gap-1">
+                        YouTube kanal <i data-lucide="external-link" class="w-3 h-3"></i>
+                    </a>
+                </div>
+                <div id="video-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <p class="text-gray-500 text-sm col-span-full">Laen videoid...</p>
+                </div>
+            </div>
+
+            <!-- 2. Tulevased esinemised -->
+            <div id="events-section" class="hidden">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="calendar" class="w-5 h-5 text-gray-400"></i> Tulevased esinemised
+                </h3>
+                <div id="events-list" class="glass-panel rounded-xl p-6 space-y-4"></div>
+            </div>
+
+            <!-- 3. Sissejuhatus & Lubadused -->
             <div>
                 <h2 class="text-2xl font-bold mb-4 text-white">Kvaliteetne peomuusika</h2>
                 <p class="text-gray-400 mb-6 italic">"Soovime toredate inimestega koos nautida head muusikat ja sünergiat."</p>
@@ -97,15 +118,7 @@
                 </div>
             </div>
 
-            <!-- Tulevased esinemised -->
-            <div id="events-section" class="hidden">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                    <i data-lucide="calendar" class="w-5 h-5 text-gray-400"></i> Tulevased esinemised
-                </h3>
-                <div id="events-list" class="glass-panel rounded-xl p-6 space-y-4"></div>
-            </div>
-
-            <!-- 2. Kontaktid -->
+            <!-- 4. Kontaktid -->
             <div id="contact" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a href="tel:+37256608062" class="glass-panel p-4 rounded-xl flex items-center gap-4 hover:bg-white/5 transition group">
                     <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white group-hover:text-black transition"><i data-lucide="phone"></i></div>
@@ -123,20 +136,7 @@
                 </a>
             </div>
 
-            <!-- 3. Videod -->
-            <div>
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-bold">Live hetked</h3>
-                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-xs text-gray-400 hover:text-white flex items-center gap-1">
-                        YouTube kanal <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
-                </div>
-                <div id="video-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <p class="text-gray-500 text-sm col-span-full">Laen videoid...</p>
-                </div>
-            </div>
-
-            <!-- 4. Pildigalerii -->
+            <!-- 5. Pildigalerii -->
             <div id="gallery-section" class="hidden">
                 <h3 class="text-xl font-bold mb-4">Galerii</h3>
                 <div id="gallery-grid" class="grid grid-cols-3 gap-2"></div>
@@ -152,7 +152,7 @@
         // --- SEADISTUSED ---
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv'; 
         
-        // Varuvariant (esialgne pilt)
+        // Pildi fallback variant
         const FALLBACK_IMAGE_ID = '1kY7moW37Z_2DyyKKwYPnDEHgoIeIDZ3J';
 
         function getDriveDirectLink(id) {
@@ -169,6 +169,7 @@
             return url;
         }
 
+        // CSV Parsimine
         function parseCSV(text) {
             const lines = text.trim().split('\n');
             const result = [];
@@ -203,16 +204,16 @@
         }
 
         async function loadData() {
-            // Esmalt määra varupilt
-            const mainImg = document.getElementById('main-band-image');
-            mainImg.src = getDriveDirectLink(FALLBACK_IMAGE_ID);
+            // Esmalt proovime laadida kohalikku faili, kui see ei õnnestu, töötab img onerror
+            // (Vaata HTML-i img tagi)
 
             if (!SHEET_CSV_URL) {
                 renderMockData();
                 return;
             }
             try {
-                const response = await fetch(SHEET_CSV_URL);
+                // Lisame timestamp'i, et vältida vahemälu probleeme
+                const response = await fetch(SHEET_CSV_URL + '&t=' + Date.now());
                 const csvText = await response.text();
                 const data = parseCSV(csvText);
                 if (data.length > 0) renderData(data);
@@ -247,7 +248,6 @@
                 const content = item.content || '';
 
                 if (section === 'melody päis') {
-                    // Määrame avapildi tabelist
                     if (url) mainImg.src = getDriveImageLink(url);
                 } else if (section === 'melody live' && videoCount < MAX_VIDEOS) {
                     const videoId = extractVideoID(url);
@@ -268,7 +268,7 @@
                         </div>
                     `;
                 } 
-                // PARANDUS: Nüüd tunneb ära nii 'esinemine' kui 'melody esinemine'
+                // Kontrollime nii 'esinemine' kui 'melody esinemine'
                 else if (section === 'esinemine' || section === 'melody esinemine') {
                     hasEvents = true;
                     eventsList.innerHTML += `
