@@ -152,7 +152,7 @@
         // --- SEADISTUSED ---
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv'; 
         
-        // Varuvariant, kui tabelis pilti pole:
+        // Varuvariant (esialgne pilt)
         const FALLBACK_IMAGE_ID = '1kY7moW37Z_2DyyKKwYPnDEHgoIeIDZ3J';
 
         function getDriveDirectLink(id) {
@@ -203,7 +203,7 @@
         }
 
         async function loadData() {
-            // Esmalt määra varupilt, et ekraan poleks must
+            // Esmalt määra varupilt
             const mainImg = document.getElementById('main-band-image');
             mainImg.src = getDriveDirectLink(FALLBACK_IMAGE_ID);
 
@@ -247,7 +247,7 @@
                 const content = item.content || '';
 
                 if (section === 'melody päis') {
-                    // UUS: Võimalus muuta avapilti otse tabelist!
+                    // Määrame avapildi tabelist
                     if (url) mainImg.src = getDriveImageLink(url);
                 } else if (section === 'melody live' && videoCount < MAX_VIDEOS) {
                     const videoId = extractVideoID(url);
@@ -267,7 +267,9 @@
                             <img src="${imgUrl}" class="w-full h-full object-cover" alt="${title}" onerror="this.style.display='none'">
                         </div>
                     `;
-                } else if (section === 'melody esinemine') {
+                } 
+                // PARANDUS: Nüüd tunneb ära nii 'esinemine' kui 'melody esinemine'
+                else if (section === 'esinemine' || section === 'melody esinemine') {
                     hasEvents = true;
                     eventsList.innerHTML += `
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 last:border-0 pb-3 last:pb-0 mb-3 last:mb-0">
@@ -288,7 +290,7 @@
             const mock = [
                 { section: 'Melody live', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
                 { section: 'Melody live', url: 'https://youtube.com/shorts/hszrt39a2CA' },
-                { section: 'Melody esinemine', title: '24. juuni', content: 'Jaanipäev Pärnus', url: '' }
+                { section: 'Esinemine', title: '22.02.2026', content: 'Varese külalistemaja', url: '' }
             ];
             renderData(mock);
         }
