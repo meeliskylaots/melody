@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ansambel MELODY | Kvaliteetne peomuusika</title>
+    <title>Ansambel MELODY | Sinu peobänd</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -11,70 +11,57 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
+            background-color: #000000;
             color: #ffffff;
-            scroll-behavior: smooth;
+            overflow-x: hidden; /* Väldime horisontaalset kerimist */
         }
 
-        .gradient-text {
-            background: linear-gradient(45deg, #ffffff, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Kohandatud kerimisriba */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        section {
-            padding: 80px 20px;
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .bullet-list li {
             position: relative;
-            padding-left: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #d1d5db;
-            line-height: 1.6;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #9ca3af;
+            font-size: 0.95rem;
         }
         .bullet-list li::before {
-            content: "✓";
+            content: "•";
             position: absolute;
             left: 0;
-            color: #ffffff;
+            color: #fff;
             font-weight: bold;
-            background: rgba(255,255,255,0.1);
-            width: 1.75rem;
-            height: 1.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 0.85rem;
         }
 
-        .hero-gradient {
-            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
-        }
-
-        /* Video container to maintain portrait for shorts */
-        .shorts-container {
+        /* Shorts/Video responsive container */
+        .video-wrapper {
             position: relative;
-            padding-bottom: 177.77%; /* 9:16 aspect ratio */
-            height: 0;
+            width: 100%;
+            padding-bottom: 177.77%; /* 9:16 suhe Shorts jaoks */
+            background: #000;
+            border-radius: 0.75rem;
             overflow: hidden;
-            border-radius: 1rem;
         }
-        .shorts-container iframe {
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -83,149 +70,97 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-black h-screen w-full flex flex-col md:flex-row overflow-hidden">
 
-    <!-- Navigatsioon -->
-    <nav class="fixed w-full z-50 bg-black/60 backdrop-blur-xl border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-            <h1 class="text-2xl font-black tracking-tighter uppercase">MELODY</h1>
-            <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
-                <a href="#about" class="hover:text-white transition-colors">Meist</a>
-                <a href="#gallery" class="hover:text-white transition-colors">Galerii</a>
-                <a href="#videos" class="hover:text-white transition-colors">Videod</a>
-                <a href="#contact" class="hover:text-white transition-colors">Kontakt</a>
-            </div>
-            <button class="md:hidden text-white" id="menu-btn">
-                <i data-lucide="menu"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Hero-sektsioon -->
-    <header class="h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1514525253361-bee8d48200f5?q=80&w=1924')] bg-cover bg-center opacity-30 scale-105"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#0a0a0a]"></div>
-        <div class="absolute inset-0 hero-gradient"></div>
+    <!-- VASAK POOL: VISUAAL (Bändi pilt) -->
+    <!-- See võtab pool ekraanist ja on fikseeritud -->
+    <div class="relative w-full md:w-5/12 lg:w-1/2 h-1/3 md:h-full flex-shrink-0 bg-gray-900">
+        <!-- Pilt: Melody 2026 2.jpg -->
+        <img src="Melody 2026 2.jpg" 
+             class="absolute inset-0 w-full h-full object-cover opacity-90" 
+             alt="Marko Must ja Meelis Külaots"
+             onerror="this.src='https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070'"> <!-- Fallback pilt kui kohalikku ei leita -->
         
-        <div class="relative text-center px-4 max-w-4xl">
-            <span class="text-xs font-bold uppercase tracking-[0.4em] text-gray-400 mb-6 block">Ansambel</span>
-            <h2 class="text-7xl md:text-[10rem] font-black mb-6 tracking-tighter uppercase leading-none">MELODY</h2>
-            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed italic">
-                "Soovime toredate inimestega koos nautida head muusikat ja sünergiat."
-            </p>
-            <div class="mt-12 flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#contact" class="px-10 py-5 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-gray-200 transition-all rounded-full shadow-2xl">Kutsu meid esinema</a>
-                <a href="#videos" class="px-10 py-5 border border-white/20 text-white font-bold uppercase text-xs tracking-widest hover:bg-white/10 transition-all rounded-full backdrop-blur-md">Vaata videoid</a>
-            </div>
+        <!-- Overlay tekst pildil -->
+        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/70 to-transparent p-6 md:p-10">
+            <p class="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2">Marko Must & Meelis Külaots</p>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter text-white">MELODY</h1>
         </div>
-    </header>
+    </div>
 
-    <!-- Tutvustus -->
-    <section id="about" class="max-w-7xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-16 items-start">
-            <div class="order-2 lg:order-1">
-                <div class="inline-block px-4 py-1 border border-white/10 rounded-full text-[10px] uppercase tracking-widest text-gray-500 mb-6">Mida me lubame</div>
-                <h3 class="text-4xl md:text-5xl font-black mb-8 tracking-tight">Kvaliteet ja meeleolu</h3>
-                <div id="bio-content" class="text-gray-400 leading-relaxed text-lg">
-                    <p class="mb-8 text-white font-medium text-xl leading-relaxed">
-                        Meil on kogenud koosseis (Marko Must ja Meelis Külaots), kes oskab publikuga suhelda ja hoida õhtu energiat.
-                    </p>
+    <!-- PAREM POOL: INFO JA SISU -->
+    <!-- See pool on keritav, kui sisu ei mahu ära -->
+    <div class="w-full md:w-7/12 lg:w-1/2 h-2/3 md:h-full overflow-y-auto bg-[#0a0a0a] border-l border-white/10 relative">
+        <div class="p-6 md:p-10 lg:p-12 max-w-2xl mx-auto flex flex-col gap-10">
+            
+            <!-- 1. Sissejuhatus & Lubadused -->
+            <div>
+                <h2 class="text-2xl font-bold mb-4 text-white">Kvaliteetne peomuusika</h2>
+                <p class="text-gray-400 mb-6 italic">"Soovime toredate inimestega koos nautida head muusikat ja sünergiat."</p>
+                
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Mida me lubame</h3>
                     <ul class="bullet-list">
-                        <li>Toome sinu majja peomeeleolu, mis paneb inimesed tantsima ja kaasa elama.</li>
-                        <li>Meil on kogenud koosseis, kes oskab publikuga suhelda ja hoida õhtu energiat.</li>
-                        <li>Pakume mitmekülgset repertuaari, mis sobib eri vanuses külastajatele.</li>
-                        <li>Tagame professionaalse esitluse ja tehnilise valmisoleku.</li>
-                        <li>Oleme paindlikud ja arvestame sündmuse eripäraga.</li>
+                        <li><strong>Peomeeleolu:</strong> Paneme inimesed tantsima ja kaasa elama.</li>
+                        <li><strong>Kogenud koosseis:</strong> Oskame publikuga suhelda ja hoida energiat.</li>
+                        <li><strong>Mitmekülgne repertuaar:</strong> Sobib eri vanuses kuulajatele.</li>
+                        <li><strong>Tehniline valmisolek:</strong> Professionaalne heli ja valgus.</li>
+                        <li><strong>Paindlikkus:</strong> Kohaneme tantsuõhtute, suvepidude ja tähtpäevadega.</li>
                     </ul>
                 </div>
             </div>
-            <div class="order-1 lg:order-2 relative group">
-                <div class="absolute -inset-4 bg-white/5 blur-3xl rounded-full"></div>
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                    <!-- Sinu üleslaaditud bändipilt -->
-                    <img src="Melody 2026 2.jpg" alt="Marko Must ja Meelis Külaots" class="w-full grayscale hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070'">
-                </div>
-                <div class="mt-6 text-center">
-                    <p class="text-lg font-bold tracking-widest text-white uppercase">Marko Must & Meelis Külaots</p>
-                    <p class="text-xs uppercase tracking-[0.4em] text-gray-500 mt-2 italic">Ansambel MELODY</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Galerii -->
-    <section id="gallery" class="bg-[#0c0c0c]">
-        <div class="max-w-7xl mx-auto">
-            <h3 class="text-4xl font-black tracking-tight mb-16 text-center">Galerii</h3>
-            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center text-gray-500">
-                Laen pilte...
-            </div>
-        </div>
-    </section>
-
-    <!-- Videod -->
-    <section id="videos" class="max-w-7xl mx-auto">
-        <h3 class="text-4xl font-black tracking-tight mb-16 text-center">Meie live videod</h3>
-        <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-center text-center text-gray-500">
-            Laen videoid...
-        </div>
-    </section>
-
-    <!-- Kontakt -->
-    <section id="contact" class="max-w-5xl mx-auto">
-        <div class="glass-card p-12 md:p-24 rounded-[3rem] text-center relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-            
-            <h3 class="text-4xl md:text-6xl font-black mb-8 uppercase tracking-tighter">Võta ühendust</h3>
-            <p class="text-gray-400 mb-16 max-w-xl mx-auto text-lg leading-relaxed">
-                Kutsu meid esinema ja muudame sinu sündmuse eriliseks.
-            </p>
-            
-            <div class="grid md:grid-cols-3 gap-12 text-left md:text-center">
-                <div class="group">
-                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
-                        <i data-lucide="mail"></i>
+            <!-- 2. Kontaktid (Kõige tähtsam info) -->
+            <div id="contact" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href="tel:+37256608062" class="glass-panel p-4 rounded-xl flex items-center gap-4 hover:bg-white/5 transition group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white group-hover:text-black transition"><i data-lucide="phone"></i></div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">Helista</p>
+                        <p class="font-medium">+372 5660 8062</p>
                     </div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">E-mail</h4>
-                    <p class="text-xl font-medium break-all">ansambelmelody@gmail.com</p>
-                </div>
-                <div class="group">
-                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
-                        <i data-lucide="phone"></i>
+                </a>
+                <a href="mailto:ansambelmelody@gmail.com" class="glass-panel p-4 rounded-xl flex items-center gap-4 hover:bg-white/5 transition group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white group-hover:text-black transition"><i data-lucide="mail"></i></div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">Kirjuta</p>
+                        <p class="font-medium break-all text-sm">ansambelmelody@gmail.com</p>
                     </div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">Telefon</h4>
-                    <p class="text-xl font-medium">+372 5660 8062</p>
+                </a>
+            </div>
+
+            <!-- 3. Live Videod (Google Sheetsist) -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold">Live hetked</h3>
+                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-xs text-gray-400 hover:text-white flex items-center gap-1">
+                        YouTube kanal <i data-lucide="external-link" class="w-3 h-3"></i>
+                    </a>
                 </div>
-                <div class="group">
-                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
-                        <i data-lucide="youtube"></i>
-                    </div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">YouTube</h4>
-                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-xl font-medium hover:text-white transition-colors underline underline-offset-8">@ansambelMelody</a>
+                <!-- Siia laeme dünaamiliselt videod -->
+                <div id="video-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <p class="text-gray-500 text-sm col-span-full">Laen videoid...</p>
                 </div>
             </div>
 
-            <div class="mt-24 pt-16 border-t border-white/5">
-                <h4 class="text-2xl font-black mb-6 italic opacity-80 uppercase tracking-widest">Sinu võit</h4>
-                <p class="text-gray-400 max-w-2xl mx-auto text-xl leading-relaxed">
-                    Rahvamaja saab usaldusväärse partneri, kes loob peole väärtust ja jätab publikule head emotsioonid, mille järele tullakse ka järgmistele üritustele.
-                </p>
+            <!-- 4. Pildigalerii (Google Sheetsist) -->
+            <div id="gallery-section" class="hidden"> <!-- Peidame alguses, näitame kui pilte on -->
+                <h3 class="text-xl font-bold mb-4">Galerii</h3>
+                <div id="gallery-grid" class="grid grid-cols-3 gap-2">
+                    <!-- Pildid tulevad siia -->
+                </div>
             </div>
+
+            <!-- Jalus -->
+            <footer class="text-center text-xs text-gray-600 pt-8 border-t border-white/5">
+                <p>&copy; <span id="footer-year"></span> ANSAMBEL MELODY. Sinu võit on meie südameasi.</p>
+            </footer>
         </div>
-    </section>
-
-    <footer class="py-20 border-t border-white/5 text-center">
-        <p class="text-[10px] font-bold uppercase tracking-[0.8em] text-gray-600">
-            &copy; <span id="footer-year"></span> ANSAMBEL MELODY
-        </p>
-    </footer>
+    </div>
 
     <script>
-        // --- CONFIGURATION ---
-        // Asenda see link oma Google Sheets CSV lingiga
-        const SHEET_CSV_URL = ''; 
+        // --- KONFIGURATSIOON ---
+        const SHEET_CSV_URL = ''; // Lisa siia oma link kui soovid
 
-        // Helper to parse CSV format
         function parseCSV(text) {
             const lines = text.trim().split('\n');
             const result = [];
@@ -245,7 +180,6 @@
             return result;
         }
 
-        // Extract ID for regular YouTube and Shorts
         function extractVideoID(url) {
             if (!url) return null;
             if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0];
@@ -263,98 +197,75 @@
                 const response = await fetch(SHEET_CSV_URL);
                 const csvText = await response.text();
                 const data = parseCSV(csvText);
-                if (data.length > 0) {
-                    renderData(data);
-                } else {
-                    renderMockData();
-                }
+                if (data.length > 0) renderData(data);
+                else renderMockData();
             } catch (error) {
-                console.error("Error loading data:", error);
+                console.error("Viga:", error);
                 renderMockData();
             }
         }
 
         function renderData(data) {
-            const galleryGrid = document.getElementById('gallery-grid');
             const videoGrid = document.getElementById('video-grid');
+            const galleryGrid = document.getElementById('gallery-grid');
+            const gallerySection = document.getElementById('gallery-section');
 
-            galleryGrid.innerHTML = '';
             videoGrid.innerHTML = '';
+            galleryGrid.innerHTML = '';
+            
+            let hasImages = false;
+
+            // Piirame videote arvu, et leht püsiks kompaktne (max 3 videot)
+            let videoCount = 0;
+            const MAX_VIDEOS = 3;
 
             data.forEach(item => {
                 const section = item.section ? item.section.toLowerCase().trim() : '';
                 const url = item.url || '';
-                const title = item.title || 'Ansambel MELODY';
+                const title = item.title || '';
 
-                // Section "Melody live" - Video section
-                if (section === 'melody live') {
+                if (section === 'melody live' && videoCount < MAX_VIDEOS) {
                     const videoId = extractVideoID(url);
                     if (videoId) {
+                        videoCount++;
                         videoGrid.innerHTML += `
-                            <div class="glass-card p-4 rounded-[2rem] group max-w-[320px] mx-auto w-full">
-                                <div class="shorts-container bg-black shadow-2xl">
-                                    <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                                <h4 class="text-center text-[10px] font-bold mt-6 px-2 tracking-widest text-gray-500 uppercase">${title}</h4>
+                            <div class="video-wrapper bg-black/50 shadow-lg group cursor-pointer hover:ring-2 ring-white/20 transition">
+                                <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" loading="lazy" allowfullscreen></iframe>
                             </div>
                         `;
                     }
-                } 
-                // Section "Melody pilt" - Gallery section
-                else if (section === 'melody pilt') {
+                } else if (section === 'melody pilt') {
+                    hasImages = true;
                     let imgUrl = url;
-                    // Support for Google Drive links
                     if (url.includes('drive.google.com')) {
                         const fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1];
                         imgUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
                     }
                     galleryGrid.innerHTML += `
-                        <div class="aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl glass-card group">
-                            <img src="${imgUrl}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="${title}" onerror="this.src='https://images.unsplash.com/photo-1514525253361-bee8d48200f5?q=80&w=1924'">
+                        <div class="aspect-square rounded-lg overflow-hidden opacity-70 hover:opacity-100 transition duration-300">
+                            <img src="${imgUrl}" class="w-full h-full object-cover" alt="${title}" onerror="this.style.display='none'">
                         </div>
                     `;
                 }
             });
 
+            if (hasImages) gallerySection.classList.remove('hidden');
             lucide.createIcons();
         }
 
         function renderMockData() {
-            // Data structure based on your Sheets screenshot
             const mock = [
-                { section: 'Melody live', title: 'Live Short 1', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
-                { section: 'Melody live', title: 'Live Short 2', url: 'https://youtube.com/shorts/hszrt39a2CA' },
-                { section: 'Melody pilt', title: 'Live Pilt', url: 'https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=2071' },
-                { section: 'Melody pilt', title: 'Pidu', url: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070' },
-                { section: 'Melody pilt', title: 'Saal', url: 'https://images.unsplash.com/photo-1514525253361-bee8d48200f5?q=80&w=1924' }
+                { section: 'Melody live', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
+                { section: 'Melody live', url: 'https://youtube.com/shorts/hszrt39a2CA' },
+                // { section: 'Melody live', url: 'https://youtube.com/shorts/hszrt39a2CA' } // Kolmas video
             ];
             renderData(mock);
         }
 
-        // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('footer-year').innerText = new Date().getFullYear();
             loadData();
             lucide.createIcons();
-
-            // Mobile menu logic
-            const menuBtn = document.getElementById('menu-btn');
-            if (menuBtn) {
-                menuBtn.onclick = () => {
-                    const navLinks = document.querySelector('.hidden.md\\:flex');
-                    navLinks.classList.toggle('hidden');
-                    navLinks.classList.toggle('flex');
-                    navLinks.classList.toggle('flex-col');
-                    navLinks.classList.toggle('absolute');
-                    navLinks.classList.toggle('top-full');
-                    navLinks.classList.toggle('left-0');
-                    navLinks.classList.toggle('w-full');
-                    navLinks.classList.toggle('bg-black/95');
-                    navLinks.classList.toggle('p-10');
-                    navLinks.classList.toggle('space-y-8');
-                    navLinks.classList.toggle('text-center');
-                };
-            }
         });
     </script>
 </body>
