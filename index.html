@@ -41,8 +41,8 @@
 
         .bullet-list li {
             position: relative;
-            padding-left: 2rem;
-            margin-bottom: 1.25rem;
+            padding-left: 2.5rem;
+            margin-bottom: 1.5rem;
             color: #d1d5db;
             line-height: 1.6;
         }
@@ -53,17 +53,33 @@
             color: #ffffff;
             font-weight: bold;
             background: rgba(255,255,255,0.1);
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1.75rem;
+            height: 1.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
         }
 
         .hero-gradient {
             background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+        }
+
+        /* Video container to maintain portrait for shorts */
+        .shorts-container {
+            position: relative;
+            padding-bottom: 177.77%; /* 9:16 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        .shorts-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -108,27 +124,30 @@
     <section id="about" class="max-w-7xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div class="order-2 lg:order-1">
-                <div class="inline-block px-4 py-1 border border-white/10 rounded-full text-[10px] uppercase tracking-widest text-gray-500 mb-6">Meie lubadus sulle</div>
-                <h3 class="text-4xl md:text-5xl font-black mb-8 tracking-tight">Kogemus ja meeleolu</h3>
+                <div class="inline-block px-4 py-1 border border-white/10 rounded-full text-[10px] uppercase tracking-widest text-gray-500 mb-6">Mida me lubame</div>
+                <h3 class="text-4xl md:text-5xl font-black mb-8 tracking-tight">Kvaliteet ja meeleolu</h3>
                 <div id="bio-content" class="text-gray-400 leading-relaxed text-lg">
-                    <p class="mb-8 text-white font-medium text-xl leading-relaxed">Meil on kogenud koosseis (Marko Must ja Meelis Külaots), kes oskab publikuga suhelda ja hoida õhtu energiat.</p>
+                    <p class="mb-8 text-white font-medium text-xl leading-relaxed">
+                        Meil on kogenud koosseis (Marko Must ja Meelis Külaots), kes oskab publikuga suhelda ja hoida õhtu energiat.
+                    </p>
                     <ul class="bullet-list">
                         <li>Toome sinu majja peomeeleolu, mis paneb inimesed tantsima ja kaasa elama.</li>
+                        <li>Meil on kogenud koosseis, kes oskab publikuga suhelda ja hoida õhtu energiat.</li>
                         <li>Pakume mitmekülgset repertuaari, mis sobib eri vanuses külastajatele.</li>
                         <li>Tagame professionaalse esitluse ja tehnilise valmisoleku.</li>
-                        <li>Oleme paindlikud ja arvestame sündmuse eripäraga – olgu see tantsuõhtu, suvepidu või tähtpäev.</li>
+                        <li>Oleme paindlikud ja arvestame sündmuse eripäraga.</li>
                     </ul>
                 </div>
             </div>
-            <div class="order-1 lg:order-2 relative">
+            <div class="order-1 lg:order-2 relative group">
                 <div class="absolute -inset-4 bg-white/5 blur-3xl rounded-full"></div>
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 aspect-[4/5] md:aspect-auto">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
                     <!-- Sinu üleslaaditud bändipilt -->
-                    <img src="Melody 2026 2.jpg" alt="Marko Must ja Meelis Külaots" class="w-full h-full object-cover transition-all duration-1000 transform hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070'">
+                    <img src="Melody 2026 2.jpg" alt="Marko Must ja Meelis Külaots" class="w-full grayscale hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070'">
                 </div>
-                <div class="mt-4 flex flex-col items-center">
-                    <p class="text-sm font-bold uppercase tracking-widest text-white">Marko Must & Meelis Külaots</p>
-                    <p class="text-[10px] uppercase tracking-[0.3em] text-gray-500 mt-1">Ansambel MELODY</p>
+                <div class="mt-6 text-center">
+                    <p class="text-lg font-bold tracking-widest text-white uppercase">Marko Must & Meelis Külaots</p>
+                    <p class="text-xs uppercase tracking-[0.4em] text-gray-500 mt-2 italic">Ansambel MELODY</p>
                 </div>
             </div>
         </div>
@@ -137,76 +156,76 @@
     <!-- Galerii -->
     <section id="gallery" class="bg-[#0c0c0c]">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center md:text-left mb-16">
-                <h3 class="text-4xl font-black tracking-tight mb-4 text-center">Galerii</h3>
-                <p class="text-gray-500 text-center">Meie tegemised ja esinemised.</p>
-            </div>
-            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Pildid tulevad siia Google Sheetsist -->
+            <h3 class="text-4xl font-black tracking-tight mb-16 text-center">Galerii</h3>
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center text-gray-500">
+                Laen pilte...
             </div>
         </div>
     </section>
 
     <!-- Videod -->
     <section id="videos" class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h3 class="text-4xl font-black tracking-tight mb-4">Videod</h3>
-            <p class="text-gray-500">Vaata ja kuula meie esitusi.</p>
-        </div>
-        <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center items-start">
-            <!-- Videod tulevad siia Google Sheetsist -->
+        <h3 class="text-4xl font-black tracking-tight mb-16 text-center">Meie live videod</h3>
+        <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-center text-center text-gray-500">
+            Laen videoid...
         </div>
     </section>
 
     <!-- Kontakt -->
     <section id="contact" class="max-w-5xl mx-auto">
-        <div class="glass-card p-12 md:p-20 rounded-[3rem] text-center relative overflow-hidden">
+        <div class="glass-card p-12 md:p-24 rounded-[3rem] text-center relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
             
-            <h3 class="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tighter">Broneeri esinemine</h3>
-            <div class="grid md:grid-cols-3 gap-12 text-left md:text-center mt-12">
+            <h3 class="text-4xl md:text-6xl font-black mb-8 uppercase tracking-tighter">Võta ühendust</h3>
+            <p class="text-gray-400 mb-16 max-w-xl mx-auto text-lg leading-relaxed">
+                Kutsu meid esinema ja muudame sinu sündmuse eriliseks.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-12 text-left md:text-center">
                 <div class="group">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
+                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
                         <i data-lucide="mail"></i>
                     </div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">E-mail</h4>
-                    <p class="text-lg font-medium break-all">ansambelmelody@gmail.com</p>
+                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">E-mail</h4>
+                    <p class="text-xl font-medium break-all">ansambelmelody@gmail.com</p>
                 </div>
                 <div class="group">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
+                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
                         <i data-lucide="phone"></i>
                     </div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Telefon</h4>
-                    <p class="text-lg font-medium">+372 5660 8062</p>
+                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">Telefon</h4>
+                    <p class="text-xl font-medium">+372 5660 8062</p>
                 </div>
                 <div class="group">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
+                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-white group-hover:text-black transition-all">
                         <i data-lucide="youtube"></i>
                     </div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">YouTube</h4>
-                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-lg font-medium hover:text-white transition-colors underline underline-offset-8">@ansambelMelody</a>
+                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">YouTube</h4>
+                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-xl font-medium hover:text-white transition-colors underline underline-offset-8">@ansambelMelody</a>
                 </div>
             </div>
 
-            <div class="mt-20 pt-12 border-t border-white/5">
-                <h4 class="text-2xl font-black mb-4 italic opacity-80">"Sinu võit"</h4>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+            <div class="mt-24 pt-16 border-t border-white/5">
+                <h4 class="text-2xl font-black mb-6 italic opacity-80 uppercase tracking-widest">Sinu võit</h4>
+                <p class="text-gray-400 max-w-2xl mx-auto text-xl leading-relaxed">
                     Rahvamaja saab usaldusväärse partneri, kes loob peole väärtust ja jätab publikule head emotsioonid, mille järele tullakse ka järgmistele üritustele.
                 </p>
             </div>
         </div>
     </section>
 
-    <footer class="py-16 border-t border-white/5 text-center">
-        <p class="text-[10px] font-bold uppercase tracking-[0.5em] text-gray-600">
-            &copy; <span id="footer-year"></span> Ansambel MELODY
+    <footer class="py-20 border-t border-white/5 text-center">
+        <p class="text-[10px] font-bold uppercase tracking-[0.8em] text-gray-600">
+            &copy; <span id="footer-year"></span> ANSAMBEL MELODY
         </p>
     </footer>
 
     <script>
-        // --- KONFIGURATSIOON ---
+        // --- CONFIGURATION ---
+        // Asenda see link oma Google Sheets CSV lingiga
         const SHEET_CSV_URL = ''; 
 
+        // Helper to parse CSV format
         function parseCSV(text) {
             const lines = text.trim().split('\n');
             const result = [];
@@ -226,6 +245,15 @@
             return result;
         }
 
+        // Extract ID for regular YouTube and Shorts
+        function extractVideoID(url) {
+            if (!url) return null;
+            if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0];
+            if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
+            if (url.includes('youtu.be/')) return url.split('/').pop().split('?')[0];
+            return null;
+        }
+
         async function loadData() {
             if (!SHEET_CSV_URL) {
                 renderMockData();
@@ -241,17 +269,9 @@
                     renderMockData();
                 }
             } catch (error) {
-                console.error("Viga andmete laadimisel:", error);
+                console.error("Error loading data:", error);
                 renderMockData();
             }
-        }
-
-        function extractVideoID(url) {
-            if (!url) return null;
-            if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0];
-            if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
-            if (url.includes('youtu.be/')) return url.split('/').pop().split('?')[0];
-            return null;
         }
 
         function renderData(data) {
@@ -264,56 +284,60 @@
             data.forEach(item => {
                 const section = item.section ? item.section.toLowerCase().trim() : '';
                 const url = item.url || '';
-                const title = item.title || 'MELODY';
+                const title = item.title || 'Ansambel MELODY';
 
+                // Section "Melody live" - Video section
                 if (section === 'melody live') {
                     const videoId = extractVideoID(url);
                     if (videoId) {
                         videoGrid.innerHTML += `
-                            <div class="glass-card p-4 rounded-3xl group max-w-xs mx-auto w-full">
-                                <div class="aspect-[9/16] relative rounded-2xl overflow-hidden bg-black">
-                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <div class="glass-card p-4 rounded-[2rem] group max-w-[320px] mx-auto w-full">
+                                <div class="shorts-container bg-black shadow-2xl">
+                                    <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
-                                <h4 class="text-center text-xs font-bold mt-4 px-2 tracking-widest text-gray-500 uppercase">${title}</h4>
+                                <h4 class="text-center text-[10px] font-bold mt-6 px-2 tracking-widest text-gray-500 uppercase">${title}</h4>
                             </div>
                         `;
                     }
-                } else if (section === 'melody pilt') {
+                } 
+                // Section "Melody pilt" - Gallery section
+                else if (section === 'melody pilt') {
                     let imgUrl = url;
+                    // Support for Google Drive links
                     if (url.includes('drive.google.com')) {
                         const fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1];
                         imgUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
                     }
                     galleryGrid.innerHTML += `
-                        <div class="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg glass-card group">
-                            <img src="${imgUrl}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${title}" onerror="this.src='https://images.unsplash.com/photo-1514525253361-bee8d48200f5?q=80&w=1924'">
+                        <div class="aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl glass-card group">
+                            <img src="${imgUrl}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="${title}" onerror="this.src='https://images.unsplash.com/photo-1514525253361-bee8d48200f5?q=80&w=1924'">
                         </div>
                     `;
                 }
             });
 
-            if (videoGrid.innerHTML === '') videoGrid.innerHTML = '<p class="text-gray-500 col-span-full text-center">Lisa videod tabelisse sektsiooni "Melody live" alla.</p>';
-            if (galleryGrid.innerHTML === '') galleryGrid.innerHTML = '<p class="text-gray-500 col-span-full text-center">Lisa pildid tabelisse sektsiooni "Melody pilt" alla.</p>';
-
             lucide.createIcons();
         }
 
         function renderMockData() {
+            // Data structure based on your Sheets screenshot
             const mock = [
-                { section: 'Melody live', title: 'Live 1', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
-                { section: 'Melody live', title: 'Live 2', url: 'https://youtube.com/shorts/hszrt39a2CA' },
-                { section: 'Melody pilt', title: 'Live', url: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070' },
-                { section: 'Melody pilt', title: 'Pidu', url: 'https://images.unsplash.com/photo-1514525253361-bee8d48200f5?q=80&w=1924' },
-                { section: 'Melody pilt', title: 'Sündmus', url: 'https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=2071' }
+                { section: 'Melody live', title: 'Live Short 1', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
+                { section: 'Melody live', title: 'Live Short 2', url: 'https://youtube.com/shorts/hszrt39a2CA' },
+                { section: 'Melody pilt', title: 'Live Pilt', url: 'https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=2071' },
+                { section: 'Melody pilt', title: 'Pidu', url: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070' },
+                { section: 'Melody pilt', title: 'Saal', url: 'https://images.unsplash.com/photo-1514525253361-bee8d48200f5?q=80&w=1924' }
             ];
             renderData(mock);
         }
 
+        // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('footer-year').innerText = new Date().getFullYear();
             loadData();
             lucide.createIcons();
 
+            // Mobile menu logic
             const menuBtn = document.getElementById('menu-btn');
             if (menuBtn) {
                 menuBtn.onclick = () => {
@@ -326,8 +350,8 @@
                     navLinks.classList.toggle('left-0');
                     navLinks.classList.toggle('w-full');
                     navLinks.classList.toggle('bg-black/95');
-                    navLinks.classList.toggle('p-8');
-                    navLinks.classList.toggle('space-y-6');
+                    navLinks.classList.toggle('p-10');
+                    navLinks.classList.toggle('space-y-8');
                     navLinks.classList.toggle('text-center');
                 };
             }
