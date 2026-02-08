@@ -63,14 +63,14 @@
 
     <!-- VASAK POOL: VISUAAL -->
     <div class="relative w-full md:w-5/12 lg:w-1/2 h-1/3 md:h-full flex-shrink-0 bg-gray-900">
-        <!-- OLULINE: Lae GitHubi pilt nimega 'melody.jpg' -->
-        <img src="melody.jpg" 
-             class="absolute inset-0 w-full h-full object-cover opacity-90" 
+        <!-- Pilt laetakse JavaScriptiga (Tabelist või varuvariandina) -->
+        <img id="main-band-image" 
+             src="" 
+             class="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-700" 
              alt="Meelis Külaots ja Marko Must"
              onerror="this.src='https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070'">
         
         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/70 to-transparent p-6 md:p-10">
-            <!-- Nimed vahetatud -->
             <p class="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2">Meelis Külaots & Marko Must</p>
             <h1 class="text-5xl md:text-7xl font-black tracking-tighter text-white">MELODY</h1>
         </div>
@@ -95,6 +95,14 @@
                         <li><strong>Paindlikkus:</strong> Kohaneme tantsuõhtute, suvepidude ja tähtpäevadega.</li>
                     </ul>
                 </div>
+            </div>
+
+            <!-- Tulevased esinemised -->
+            <div id="events-section" class="hidden">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="calendar" class="w-5 h-5 text-gray-400"></i> Tulevased esinemised
+                </h3>
+                <div id="events-list" class="glass-panel rounded-xl p-6 space-y-4"></div>
             </div>
 
             <!-- 2. Kontaktid -->
@@ -144,19 +152,21 @@
         // --- SEADISTUSED ---
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv'; 
         
-        // Pildi laadimine toimub nüüd otse failist 'melody.jpg', mis peab olema GitHubis.
+        // Varuvariant, kui tabelis pilti pole:
+        const FALLBACK_IMAGE_ID = '1kY7moW37Z_2DyyKKwYPnDEHgoIeIDZ3J';
 
-        // Funktsioon Drive lingi töötlemiseks (säilitame selle galerii jaoks)
+        function getDriveDirectLink(id) {
+             return `https://drive.google.com/uc?export=view&id=${id}`;
+        }
+
         function getDriveImageLink(url) {
             if (!url) return '';
-            // Kui on tavaline share link
             if (url.includes('drive.google.com')) {
                 const idMatch = url.match(/\/d\/(.*?)\/|\?id=(.*?)$/);
                 const fileId = idMatch ? (idMatch[1] || idMatch[2]) : null;
-                // Kasutame 'uc?export=view' endpointi
-                if (fileId) return `https://drive.google.com/uc?export=view&id=${fileId}`;
+                if (fileId) return getDriveDirectLink(fileId);
             }
-            return url; // Tagasta originaal kui pole Drive'i link
+            return url;
         }
 
         function parseCSV(text) {
@@ -166,12 +176,19 @@
             const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
             for(let i = 1; i < lines.length; i++) {
                 if(!lines[i]) continue;
+                const row = [];
+                let inQuote = false;
+                let start = 0;
+                for (let j = 0; j < lines[i].length; j++) {
+                    if (lines[i][j] === '"') inQuote = !inQuote;
+                    else if (lines[i][j] === ',' && !inQuote) {
+                        row.push(lines[i].substring(start, j).trim().replace(/^"|"$/g, ''));
+                        start = j + 1;
+                    }
+                }
+                row.push(lines[i].substring(start).trim().replace(/^"|"$/g, ''));
                 const obj = {};
-                const currentline = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || lines[i].split(',');
-                headers.forEach((header, index) => {
-                    let val = currentline[index] ? currentline[index].trim() : '';
-                    obj[header] = val.replace(/^"|"$/g, '');
-                });
+                headers.forEach((header, index) => obj[header] = row[index] || '');
                 result.push(obj);
             }
             return result;
@@ -186,6 +203,10 @@
         }
 
         async function loadData() {
+            // Esmalt määra varupilt, et ekraan poleks must
+            const mainImg = document.getElementById('main-band-image');
+            mainImg.src = getDriveDirectLink(FALLBACK_IMAGE_ID);
+
             if (!SHEET_CSV_URL) {
                 renderMockData();
                 return;
@@ -206,11 +227,16 @@
             const videoGrid = document.getElementById('video-grid');
             const galleryGrid = document.getElementById('gallery-grid');
             const gallerySection = document.getElementById('gallery-section');
+            const eventsList = document.getElementById('events-list');
+            const eventsSection = document.getElementById('events-section');
+            const mainImg = document.getElementById('main-band-image');
 
             videoGrid.innerHTML = '';
             galleryGrid.innerHTML = '';
+            eventsList.innerHTML = '';
             
             let hasImages = false;
+            let hasEvents = false;
             let videoCount = 0;
             const MAX_VIDEOS = 3;
 
@@ -218,8 +244,12 @@
                 const section = item.section ? item.section.toLowerCase().trim() : '';
                 const url = item.url || '';
                 const title = item.title || '';
+                const content = item.content || '';
 
-                if (section === 'melody live' && videoCount < MAX_VIDEOS) {
+                if (section === 'melody päis') {
+                    // UUS: Võimalus muuta avapilti otse tabelist!
+                    if (url) mainImg.src = getDriveImageLink(url);
+                } else if (section === 'melody live' && videoCount < MAX_VIDEOS) {
                     const videoId = extractVideoID(url);
                     if (videoId) {
                         videoCount++;
@@ -237,17 +267,28 @@
                             <img src="${imgUrl}" class="w-full h-full object-cover" alt="${title}" onerror="this.style.display='none'">
                         </div>
                     `;
+                } else if (section === 'melody esinemine') {
+                    hasEvents = true;
+                    eventsList.innerHTML += `
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 last:border-0 pb-3 last:pb-0 mb-3 last:mb-0">
+                            <span class="font-bold text-white text-lg w-32 flex-shrink-0">${title}</span>
+                            <span class="text-gray-400 text-sm sm:text-right flex-grow">${content}</span>
+                            ${url ? `<a href="${url}" target="_blank" class="mt-2 sm:mt-0 sm:ml-4 text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded transition whitespace-nowrap">Info</a>` : ''}
+                        </div>
+                    `;
                 }
             });
 
             if (hasImages) gallerySection.classList.remove('hidden');
+            if (hasEvents) eventsSection.classList.remove('hidden');
             lucide.createIcons();
         }
 
         function renderMockData() {
             const mock = [
                 { section: 'Melody live', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
-                { section: 'Melody live', url: 'https://youtube.com/shorts/hszrt39a2CA' }
+                { section: 'Melody live', url: 'https://youtube.com/shorts/hszrt39a2CA' },
+                { section: 'Melody esinemine', title: '24. juuni', content: 'Jaanipäev Pärnus', url: '' }
             ];
             renderData(mock);
         }
