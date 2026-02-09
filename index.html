@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- --- SEO JA SOTSIAALMEEDIA SEADISTUSED (MUUDA NEED OMA ANDMETEKS) --- -->
     <title>Ansambel MELODY | Sinu peobänd</title>
+    <meta name="description" content="Kutsu ansambel MELODY oma üritusele! Marko Must ja Meelis Külaots toovad peomeeleolu, hea muusika ja sünergia.">
+    <meta name="keywords" content="ansambel, bänd, pulmaisa, tantsumuusika, Marko Must, Meelis Külaots, peobänd, live muusika">
+    
+    <!-- Facebook / Open Graph (Muuda "content" sisu vastavalt oma lehe aadressile) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ansambel MELODY | Parim peomuusika">
+    <meta property="og:description" content="Kutsu meid esinema! Kogenud koosseis, lai repertuaar ja garanteeritud peomeeleolu.">
+    
+    <!-- OLULINE: Pane siia oma GitHubi lehe aadress (nt https://mariomust.github.io/melody/) -->
+    <meta property="og:url" content="https://meeliskylaots.github.io/sinu-repo/">
+    
+    <!-- OLULINE: See pilt ilmub Facebookis jagades. Pane siia täispikk link pildile -->
+    <meta property="og:image" content="https://meeliskylaots.github.io/sinu-repo/melody.jpg"> 
+    <!-- --------------------------------------------------------------------- -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -126,201 +143,3 @@
 
             <!-- 2. Videod -->
             <div>
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-bold">Live hetked</h3>
-                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-xs text-gray-400 hover:text-white flex items-center gap-1">
-                        YouTube kanal <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
-                </div>
-                <div id="video-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <p class="text-gray-500 text-sm col-span-full">Laen videoid...</p>
-                </div>
-            </div>
-
-            <!-- 3. Tulevased esinemised (JOOKSEV TEKST) -->
-            <div id="events-section" class="hidden">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                    <i data-lucide="calendar" class="w-5 h-5 text-gray-400"></i> Tulevased esinemised
-                </h3>
-                <div class="glass-panel rounded-xl p-4 marquee-container bg-white/5">
-                    <div id="events-list" class="marquee-content text-lg"></div>
-                </div>
-            </div>
-
-            <!-- 4. Sissejuhatus & Lubadused -->
-            <div>
-                <h2 class="text-2xl font-bold mb-4 text-white">Kvaliteetne peomuusika</h2>
-                <p class="text-gray-400 mb-6 italic">"Soovime toredate inimestega koos nautida head muusikat ja sünergiat."</p>
-                
-                <div class="glass-panel rounded-xl p-6">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Mida me lubame</h3>
-                    <ul class="bullet-list">
-                        <li><strong>Peomeeleolu:</strong> Paneme inimesed tantsima ja kaasa elama.</li>
-                        <li><strong>Kogenud koosseis:</strong> Oskame publikuga suhelda ja hoida energiat.</li>
-                        <li><strong>Mitmekülgne repertuaar:</strong> Sobib eri vanuses kuulajatele.</li>
-                        <li><strong>Tehniline valmisolek:</strong> Professionaalne heli ja valgus.</li>
-                        <li><strong>Paindlikkus:</strong> Kohaneme tantsuõhtute, suvepidude ja tähtpäevadega.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 5. Pildigalerii -->
-            <div id="gallery-section" class="hidden">
-                <h3 class="text-xl font-bold mb-4">Galerii</h3>
-                <div id="gallery-grid" class="grid grid-cols-3 gap-2"></div>
-            </div>
-
-            <footer class="text-center text-xs text-gray-600 pt-8 border-t border-white/5">
-                <p>&copy; <span id="footer-year"></span> ANSAMBEL MELODY.</p>
-            </footer>
-        </div>
-    </div>
-
-    <script>
-        // --- SEADISTUSED ---
-        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv'; 
-        
-        function getDriveDirectLink(id) {
-             return `https://drive.google.com/uc?export=view&id=${id}`;
-        }
-
-        function getDriveImageLink(url) {
-            if (!url) return '';
-            if (url.includes('drive.google.com')) {
-                const idMatch = url.match(/\/d\/(.*?)\/|\?id=(.*?)$/);
-                const fileId = idMatch ? (idMatch[1] || idMatch[2]) : null;
-                if (fileId) return getDriveDirectLink(fileId);
-            }
-            return url;
-        }
-
-        function parseCSV(text) {
-            const lines = text.trim().split('\n');
-            const result = [];
-            if (lines.length < 1) return result;
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-            for(let i = 1; i < lines.length; i++) {
-                if(!lines[i]) continue;
-                const row = [];
-                let inQuote = false;
-                let start = 0;
-                for (let j = 0; j < lines[i].length; j++) {
-                    if (lines[i][j] === '"') inQuote = !inQuote;
-                    else if (lines[i][j] === ',' && !inQuote) {
-                        row.push(lines[i].substring(start, j).trim().replace(/^"|"$/g, ''));
-                        start = j + 1;
-                    }
-                }
-                row.push(lines[i].substring(start).trim().replace(/^"|"$/g, ''));
-                const obj = {};
-                headers.forEach((header, index) => obj[header] = row[index] || '');
-                result.push(obj);
-            }
-            return result;
-        }
-
-        function extractVideoID(url) {
-            if (!url) return null;
-            if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0];
-            if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
-            if (url.includes('youtu.be/')) return url.split('/').pop().split('?')[0];
-            return null;
-        }
-
-        async function loadData() {
-            if (!SHEET_CSV_URL) {
-                renderMockData();
-                return;
-            }
-            try {
-                const response = await fetch(SHEET_CSV_URL + '&t=' + Date.now());
-                const csvText = await response.text();
-                const data = parseCSV(csvText);
-                if (data.length > 0) renderData(data);
-                else renderMockData();
-            } catch (error) {
-                console.error("Viga:", error);
-                renderMockData();
-            }
-        }
-
-        function renderData(data) {
-            const videoGrid = document.getElementById('video-grid');
-            const galleryGrid = document.getElementById('gallery-grid');
-            const gallerySection = document.getElementById('gallery-section');
-            const eventsList = document.getElementById('events-list');
-            const eventsSection = document.getElementById('events-section');
-            const mainImg = document.getElementById('main-band-image');
-
-            videoGrid.innerHTML = '';
-            galleryGrid.innerHTML = '';
-            eventsList.innerHTML = '';
-            
-            let hasImages = false;
-            let hasEvents = false;
-            let videoCount = 0;
-            const MAX_VIDEOS = 3;
-
-            data.forEach(item => {
-                const section = item.section ? item.section.toLowerCase().trim() : '';
-                const url = item.url || '';
-                const title = item.title || '';
-                const content = item.content || '';
-
-                if (section === 'melody päis') {
-                    if (url) mainImg.src = getDriveImageLink(url);
-                } else if (section === 'melody live' && videoCount < MAX_VIDEOS) {
-                    const videoId = extractVideoID(url);
-                    if (videoId) {
-                        videoCount++;
-                        videoGrid.innerHTML += `
-                            <div class="video-wrapper bg-black/50 shadow-lg group cursor-pointer hover:ring-2 ring-white/20 transition">
-                                <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" loading="lazy" allowfullscreen></iframe>
-                            </div>
-                        `;
-                    }
-                } else if (section === 'melody pilt') {
-                    hasImages = true;
-                    const imgUrl = getDriveImageLink(url);
-                    galleryGrid.innerHTML += `
-                        <div class="aspect-square rounded-lg overflow-hidden opacity-70 hover:opacity-100 transition duration-300">
-                            <img src="${imgUrl}" class="w-full h-full object-cover" alt="${title}" onerror="this.style.display='none'">
-                        </div>
-                    `;
-                } 
-                else if (section === 'esinemine' || section === 'melody esinemine') {
-                    hasEvents = true;
-                    eventsList.innerHTML += `
-                        <span class="inline-flex items-center mx-8">
-                            <span class="font-bold text-white mr-2">${title}</span>
-                            <span class="text-gray-300">${content}</span>
-                            ${url ? `<a href="${url}" target="_blank" class="ml-2 text-xs bg-white/20 hover:bg-white/40 text-white px-2 py-0.5 rounded transition">Info</a>` : ''}
-                        </span>
-                        <span class="text-white/20 mx-2">•</span>
-                    `;
-                }
-            });
-
-            if (hasImages) gallerySection.classList.remove('hidden');
-            if (hasEvents) eventsSection.classList.remove('hidden');
-            lucide.createIcons();
-        }
-
-        function renderMockData() {
-            const mock = [
-                { section: 'Melody live', url: 'https://youtube.com/shorts/Atr2RnQ3FAo' },
-                { section: 'Melody live', url: 'https://youtube.com/shorts/hszrt39a2CA' },
-                { section: 'Esinemine', title: '22.02.2026', content: 'Varese külalistemaja' },
-                { section: 'Esinemine', title: '24.06.2026', content: 'Jaanipäev Pärnus' }
-            ];
-            renderData(mock);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('footer-year').innerText = new Date().getFullYear();
-            loadData();
-            lucide.createIcons();
-        });
-    </script>
-</body>
-</html>
