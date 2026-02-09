@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- --- SEO JA SOTSIAALMEEDIA (VÄGA OLULINE OSA) --- -->
     <title>Ansambel MELODY | Sinu peobänd</title>
     <meta name="description" content="Kutsu ansambel MELODY oma üritusele! Marko Must ja Meelis Külaots toovad peomeeleolu, hea muusika ja sünergia.">
-    
+
+    <!-- SEO boonus -->
+    <link rel="canonical" href="https://meeliskylaots.github.io/melody/">
+
     <!-- Facebook / Messenger / Open Graph eelvaade -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://meeliskylaots.github.io/melody/">
     <meta property="og:title" content="Ansambel MELODY | Kutsu meid esinema!">
     <meta property="og:description" content="Energiline ja rahvaga suhtlev bänd sinu peole. Marko Must ja Meelis Külaots.">
-    <!-- See rida määrab pildi, mis ilmub lingi jagamisel -->
     <meta property="og:image" content="https://meeliskylaots.github.io/melody/melody.jpg">
+    <meta property="og:site_name" content="Ansambel MELODY">
+    <meta property="og:locale" content="et_EE">
     <!-- ------------------------------------------------ -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000000;
@@ -79,20 +83,20 @@
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
-        
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 45s linear infinite;
-            padding-left: 100%;
-        }
 
+        /* Sujuv loop: sisu dubleeritakse JS-is ja liigub -50% */
+        .marquee-content {
+            display: inline-flex;
+            align-items: center;
+            will-change: transform;
+            animation: marquee 35s linear infinite;
+        }
         .marquee-content:hover {
             animation-play-state: paused;
         }
-
         @keyframes marquee {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            100% { transform: translateX(-50%); }
         }
     </style>
 </head>
@@ -100,12 +104,12 @@
 
     <!-- VASAK POOL: VISUAAL -->
     <div class="relative w-full md:w-5/12 lg:w-1/2 h-2/5 md:h-full flex-shrink-0 bg-gray-900">
-        <img id="main-band-image" 
-             src="melody.jpg" 
-             class="absolute inset-0 w-full h-full object-cover object-top opacity-90 transition-opacity duration-700" 
+        <img id="main-band-image"
+             src="melody.jpg"
+             class="absolute inset-0 w-full h-full object-cover object-top opacity-90 transition-opacity duration-700"
              alt="Meelis Külaots ja Marko Must"
              onerror="this.src='https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070'">
-        
+
         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/70 to-transparent p-6 md:p-10">
             <p class="text-[10px] sm:text-sm font-bold tracking-widest sm:tracking-[0.3em] uppercase text-gray-400 mb-2 whitespace-nowrap">Meelis Külaots & Marko Must</p>
             <h1 class="text-5xl md:text-7xl font-black tracking-tighter text-white">MELODY</h1>
@@ -115,7 +119,7 @@
     <!-- PAREM POOL: INFO -->
     <div class="w-full md:w-7/12 lg:w-1/2 h-3/5 md:h-full overflow-y-auto bg-[#0a0a0a] border-l border-white/10 relative">
         <div class="p-6 md:p-10 lg:p-12 max-w-2xl mx-auto flex flex-col gap-10">
-            
+
             <!-- 1. Kontaktid -->
             <div id="contact" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a href="tel:+37256608062" class="glass-panel p-4 rounded-xl flex items-center gap-4 hover:bg-white/5 transition group">
@@ -138,7 +142,7 @@
             <div>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold">Live hetked</h3>
-                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" class="text-xs text-gray-400 hover:text-white flex items-center gap-1">
+                    <a href="https://www.youtube.com/@ansambelMelody" target="_blank" rel="noopener noreferrer" class="text-xs text-gray-400 hover:text-white flex items-center gap-1">
                         YouTube kanal <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                 </div>
@@ -161,7 +165,7 @@
             <div>
                 <h2 class="text-2xl font-bold mb-4 text-white">Kvaliteetne peomuusika</h2>
                 <p class="text-gray-400 mb-6 italic">"Soovime toredate inimestega koos nautida head muusikat ja sünergiat."</p>
-                
+
                 <div class="glass-panel rounded-xl p-6">
                     <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Mida me lubame</h3>
                     <ul class="bullet-list">
@@ -188,10 +192,10 @@
 
     <script>
         // --- SEADISTUSED ---
-        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv'; 
-        
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv';
+
         function getDriveDirectLink(id) {
-             return `https://drive.google.com/uc?export=view&id=${id}`;
+            return `https://drive.google.com/uc?export=view&id=${id}`;
         }
 
         function getDriveImageLink(url) {
@@ -209,8 +213,8 @@
             const result = [];
             if (lines.length < 1) return result;
             const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-            for(let i = 1; i < lines.length; i++) {
-                if(!lines[i]) continue;
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i]) continue;
                 const row = [];
                 let inQuote = false;
                 let start = 0;
@@ -235,6 +239,16 @@
             if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
             if (url.includes('youtu.be/')) return url.split('/').pop().split('?')[0];
             return null;
+        }
+
+        // UUS: EE kuupäeva parser (DD.MM.YYYY)
+        function parseEeDate(dateStr) {
+            const m = (dateStr || '').trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+            if (!m) return null;
+            const dd = Number(m[1]);
+            const mm = Number(m[2]);
+            const yyyy = Number(m[3]);
+            return new Date(yyyy, mm - 1, dd);
         }
 
         async function loadData() {
@@ -265,11 +279,14 @@
             videoGrid.innerHTML = '';
             galleryGrid.innerHTML = '';
             eventsList.innerHTML = '';
-            
+
             let hasImages = false;
             let hasEvents = false;
             let videoCount = 0;
             const MAX_VIDEOS = 3;
+
+            // UUS: kogu esinemised kokku, filtreeri ja sorteeri pärast
+            const events = [];
 
             data.forEach(item => {
                 const section = item.section ? item.section.toLowerCase().trim() : '';
@@ -279,6 +296,7 @@
 
                 if (section === 'melody päis') {
                     if (url) mainImg.src = getDriveImageLink(url);
+
                 } else if (section === 'melody live' && videoCount < MAX_VIDEOS) {
                     const videoId = extractVideoID(url);
                     if (videoId) {
@@ -289,6 +307,7 @@
                             </div>
                         `;
                     }
+
                 } else if (section === 'melody pilt') {
                     hasImages = true;
                     const imgUrl = getDriveImageLink(url);
@@ -297,19 +316,40 @@
                             <img src="${imgUrl}" class="w-full h-full object-cover" alt="${title}" onerror="this.style.display='none'">
                         </div>
                     `;
-                } 
-                else if (section === 'esinemine' || section === 'melody esinemine') {
-                    hasEvents = true;
-                    eventsList.innerHTML += `
-                        <span class="inline-flex items-center mx-8">
-                            <span class="font-bold text-white mr-2">${title}</span>
-                            <span class="text-gray-300">${content}</span>
-                            ${url ? `<a href="${url}" target="_blank" class="ml-2 text-xs bg-white/20 hover:bg-white/40 text-white px-2 py-0.5 rounded transition">Info</a>` : ''}
-                        </span>
-                        <span class="text-white/20 mx-2">•</span>
-                    `;
+
+                } else if (section === 'esinemine' || section === 'melody esinemine') {
+                    const d = parseEeDate(title);
+                    if (d) events.push({ date: d, title, content, url });
                 }
             });
+
+            // UUS: peida möödunud, sorteeri, renderda
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const upcoming = events
+                .filter(e => {
+                    const d = new Date(e.date);
+                    d.setHours(0, 0, 0, 0);
+                    return d >= today;
+                })
+                .sort((a, b) => a.date - b.date);
+
+            if (upcoming.length) {
+                hasEvents = true;
+
+                const html = upcoming.map(e => `
+                    <span class="inline-flex items-center mx-8">
+                        <span class="font-bold text-white mr-2">${e.title}</span>
+                        <span class="text-gray-300">${e.content}</span>
+                        ${e.url ? `<a href="${e.url}" target="_blank" rel="noopener noreferrer" class="ml-2 text-xs bg-white/20 hover:bg-white/40 text-white px-2 py-0.5 rounded transition">Info</a>` : ''}
+                    </span>
+                    <span class="text-white/20 mx-2">•</span>
+                `).join('');
+
+                // UUS: dubleeri, et marquee loopiks
+                eventsList.innerHTML = html + html;
+            }
 
             if (hasImages) gallerySection.classList.remove('hidden');
             if (hasEvents) eventsSection.classList.remove('hidden');
