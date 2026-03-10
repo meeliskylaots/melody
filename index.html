@@ -35,7 +35,7 @@
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        /* Peidame kerimisriba videote sektsioonist, et oleks puhtam */
+        /* Peidame kerimisriba videote sektsioonist */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -62,17 +62,17 @@
 
         /* Video suurus karussellis */
         .video-card {
-            flex: 0 0 200px; /* Laius mobiilis */
+            flex: 0 0 200px;
             scroll-snap-align: start;
         }
         @media (min-width: 640px) {
-            .video-card { flex: 0 0 240px; } /* Laius arvutis */
+            .video-card { flex: 0 0 240px; }
         }
 
         .video-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 177.77%; /* 9:16 suhe (Shorts) */
+            padding-bottom: 177.77%; /* 9:16 suhe */
             background: #000;
             border-radius: 0.75rem;
             overflow: hidden;
@@ -105,6 +105,11 @@
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
+        }
+
+        /* Sujuv kerimine nuppude jaoks */
+        .scroll-smooth {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -146,7 +151,7 @@
                 </a>
             </div>
 
-            <!-- 2. Videod (MUUDETUD KERITAVAKS) -->
+            <!-- 2. Videod -->
             <div>
                 <div class="flex items-center justify-between mb-4 px-1">
                     <h3 class="text-xl font-bold">Live hetked</h3>
@@ -154,11 +159,26 @@
                         YouTube kanal <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                 </div>
-                <!-- Keritav konteiner -->
-                <div id="video-grid" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory">
-                    <p class="text-gray-500 text-sm">Laen videoid...</p>
+                
+                <!-- Keritav konteiner koos nuppudega -->
+                <div class="relative group">
+                    <!-- Vasak nool -->
+                    <button onclick="scrollVideos(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/90 p-2 rounded-full border border-white/10 ml-2 hidden md:flex items-center justify-center transition-all opacity-0 group-hover:opacity-100">
+                        <i data-lucide="chevron-left" class="w-5 h-5 text-white"></i>
+                    </button>
+                    
+                    <!-- Parem nool -->
+                    <button onclick="scrollVideos(1)" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/90 p-2 rounded-full border border-white/10 mr-2 hidden md:flex items-center justify-center transition-all opacity-0 group-hover:opacity-100">
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-white"></i>
+                    </button>
+
+                    <div id="video-grid" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth">
+                        <p class="text-gray-500 text-sm">Laen videoid...</p>
+                    </div>
                 </div>
-                <p class="text-[10px] text-gray-600 mt-1 px-1">Kerige videoid vasakule-paremale <i data-lucide="move-horizontal" class="inline w-3 h-3"></i></p>
+                <p class="text-[10px] text-gray-600 mt-1 px-1 flex items-center gap-1">
+                    <i data-lucide="mouse-pointer-2" class="w-3 h-3"></i> Kerige või kasutage nooli
+                </p>
             </div>
 
             <!-- 3. Tulevased esinemised -->
@@ -202,6 +222,14 @@
 
     <script>
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrhn5qPOiavthWnemiOB5DVgyJJn7O8-FQzyx95NDjOAv15ghHaabwTSQFciEub7nxdWnNQLYoIpuC/pub?output=csv';
+
+        // Videote kerimise funktsioon
+        function scrollVideos(direction) {
+            const grid = document.getElementById('video-grid');
+            const cardWidth = window.innerWidth < 640 ? 200 : 240;
+            const gap = 16; // gap-4 on 1rem ehk 16px
+            grid.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' });
+        }
 
         function getDriveDirectLink(id) {
             return `https://drive.google.com/uc?export=view&id=${id}`;
@@ -285,7 +313,7 @@
             let hasImages = false;
             let hasEvents = false;
             let videoCount = 0;
-            const MAX_VIDEOS = 20; // Tõstetud limiiti, et saaks kerida palju videoid
+            const MAX_VIDEOS = 20;
 
             const events = [];
 
