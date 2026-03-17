@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://meeliskylaots.github.io/melody/sitemap.xml
