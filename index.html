@@ -1,22 +1,38 @@
-<!DOCTYPE html>
-<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- --- SEO JA SOTSIAALMEEDIA --- -->
-    <title>Ansambel MELODY | Sinu peobänd</title>
-    <meta name="description" content="Kutsu ansambel MELODY oma üritusele! Marko Must ja Meelis Külaots toovad peomeeleolu, hea muusika ja sünergia.">
-
+    <title>Ansambel Melody | Peobänd pulma, sünnipäevale ja tantsuõhtule</title>
+    <meta name="description" content="Ansambel Melody on kahemehe peobänd, kes esineb pulmas, sünnipäeval, suvepeol, firmapeol ja tantsuõhtul üle Eesti. Mängime eesti ja maaiilma hitte ning loome peole elava meeleolu.">
     <link rel="canonical" href="https://meeliskylaots.github.io/melody/">
+    <meta name="robots" content="index,follow">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://meeliskylaots.github.io/melody/">
-    <meta property="og:title" content="Ansambel MELODY | Kutsu meid esinema!">
-    <meta property="og:description" content="Energiline ja rahvaga suhtlev bänd sinu peole. Marko Must ja Meelis Külaots.">
+    <meta property="og:title" content="Ansambel Melody | Peobänd pulma, sünnipäevale ja tantsuõhtule">
+    <meta property="og:description" content="Ansambel Melody on kahemehe peobänd, kes esineb pulmas, sünnipäeval, suvepeol, firmapeol ja tantsuõhtul üle Eesti.">
     <meta property="og:image" content="https://meeliskylaots.github.io/melody/melody.jpg">
-    <meta property="og:site_name" content="Ansambel MELODY">
+    <meta property="og:image:alt" content="Ansambel Melody promopilt">
+    <meta property="og:site_name" content="Ansambel Melody">
     <meta property="og:locale" content="et_EE">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ansambel Melody | Peobänd pulma, sünnipäevale ja tantsuõhtule">
+    <meta name="twitter:description" content="Ansambel Melody on kahemehe peobänd, kes esineb pulmas, sünnipäeval, suvepeol, firmapeol ja tantsuõhtul üle Eesti.">
+    <meta name="twitter:image" content="https://meeliskylaots.github.io/melody/melody.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicGroup",
+      "name": "Ansambel Melody",
+      "url": "https://meeliskylaots.github.io/melody/",
+      "image": "https://meeliskylaots.github.io/melody/melody.jpg",
+      "description": "Ansambel Melody on kahemehe peobänd, kes esineb pulmas, sünnipäeval, suvepeol, firmapeol ja tantsuõhtul üle Eesti.",
+      "email": "mailto:ansambelmelody@gmail.com",
+      "telephone": "+37256608062"
+    }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -35,7 +51,6 @@
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        /* Peidame kerimisriba videote sektsioonist */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -60,7 +75,6 @@
             font-weight: bold;
         }
 
-        /* Video suurus karussellis */
         .video-card {
             flex: 0 0 200px;
             scroll-snap-align: start;
@@ -72,7 +86,7 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 177.77%; /* 9:16 suhe */
+            padding-bottom: 177.77%;
             background: #000;
             border-radius: 0.75rem;
             overflow: hidden;
@@ -107,7 +121,6 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Sujuv kerimine nuppude jaoks */
         .scroll-smooth {
             scroll-behavior: smooth;
         }
