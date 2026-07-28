@@ -7,11 +7,9 @@
     <title>Ansambel Melody | Peobänd pulma, sünnipäevale ja tantsuõhtule</title>
     <meta name="description" content="Ansambel Melody on kahemehe peobänd, kes esineb pulmas, sünnipäeval, suvepeol, firmapeol ja tantsuõhtul üle Eesti. Mängime eesti ja maailma hitte ning loome peole elava meeleolu.">
     
-    <!-- SIIN ON TÄHTIS MUUDATUS: Ütleme Google'ile, et SEE on nüüd õige ja peamine aadress -->
     <link rel="canonical" href="https://ansambelmelody.ee/">
     <meta name="robots" content="index,follow">
 
-    <!-- SOTSIAALMEEDIA LINGID UUENDATUD -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ansambelmelody.ee/">
     <meta property="og:title" content="Ansambel Melody | Peobänd pulma, sünnipäevale ja tantsuõhtule">
@@ -26,7 +24,6 @@
     <meta name="twitter:description" content="Ansambel Melody on kahemehe peobänd, kes esineb pulmas, sünnipäeval, suvepeol, firmapeol ja tantsuõhtul üle Eesti.">
     <meta name="twitter:image" content="https://ansambelmelody.ee/melody.jpg">
 
-    <!-- GOOGLE SAIDI NIME SKEEM (Uuendatud aadressiga) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -37,7 +34,6 @@
     }
     </script>
 
-    <!-- BÄNDI INFO SKEEM (Uuendatud aadressiga) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -357,11 +353,26 @@
             return result;
         }
 
-        function extractVideoID(url) {
+        // TÄIENDATUD FUNKTSIOON: Toetab YouTube'i ja Facebooki videoid
+        function getVideoEmbedUrl(url) {
             if (!url) return null;
-            if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0];
-            if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
-            if (url.includes('youtu.be/')) return url.split('/').pop().split('?')[0];
+
+            // Facebooki video
+            if (url.includes('facebook.com') || url.includes('fb.watch')) {
+                // Facebooki plugin nõuab terve URL-i kodeerimist
+                return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&t=0`;
+            }
+
+            // YouTube'i video
+            let videoId = null;
+            if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0];
+            else if (url.includes('v=')) videoId = url.split('v=')[1].split('&')[0];
+            else if (url.includes('youtu.be/')) videoId = url.split('/').pop().split('?')[0];
+
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+
             return null;
         }
 
@@ -431,20 +442,22 @@
                     }
                 }
 
+                // SIIN ON MUUDATUS: Kasutame uut getVideoEmbedUrl funktsiooni
                 else if (section === 'melody live' && videoCount < MAX_VIDEOS) {
-                    const videoId = extractVideoID(url);
+                    const embedUrl = getVideoEmbedUrl(url);
 
-                    if (videoId) {
+                    if (embedUrl) {
                         videoCount++;
                         videoGrid.innerHTML += `
                             <div class="video-card">
                                 <div class="video-wrapper bg-black/50 shadow-lg ring-1 ring-white/10">
                                     <iframe
-                                        src="https://www.youtube.com/embed/${videoId}"
+                                        src="${embedUrl}"
                                         title="${title || 'Ansambel Melody video'}"
                                         frameborder="0"
                                         loading="lazy"
-                                        allowfullscreen>
+                                        allowfullscreen="true"
+                                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
                                     </iframe>
                                 </div>
                             </div>
