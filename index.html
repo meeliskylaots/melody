@@ -103,25 +103,25 @@
             .video-card { flex: 0 0 240px; }
         }
 
+        /* UUS ja TÖÖKINDLAM lähenemine videokastidele */
         .video-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 177.77%; /* 16:9 portree proportsioon */
-            background: #000;
+            /* Eemaldame fikseeritud pikkuse (padding-bottom: 177.77%), mis tegi kastid liiga pikaks */
+            aspect-ratio: 9 / 16; /* Määrab püstise baasformaadi YouTube Shorts'i jaoks */
+            background: #0a0a0a;
             border-radius: 0.75rem;
             overflow: hidden;
-            /* Flexbox seaded, et kõik videod oleksid ilusasti keskel */
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .video-wrapper iframe {
-            position: absolute;
-            inset: 0;
             width: 100%;
             height: 100%;
             border: none;
+            /* Facebooki videod ei lähe enam katki, sest nad ei ole absoluutselt positsioneeritud */
         }
 
         .marquee-container {
