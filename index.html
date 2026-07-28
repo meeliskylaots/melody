@@ -353,26 +353,31 @@
             return result;
         }
 
-        // TÄIENDATUD FUNKTSIOON: Toetab YouTube'i ja Facebooki videoid
         function getVideoEmbedUrl(url) {
             if (!url) return null;
 
-            // Facebooki video
-            if (url.includes('facebook.com') || url.includes('fb.watch')) {
-                // Facebooki plugin nõuab terve URL-i kodeerimist
-                return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&t=0`;
-            }
-
-            // YouTube'i video
-            let videoId = null;
-            if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0];
-            else if (url.includes('v=')) videoId = url.split('v=')[1].split('&')[0];
-            else if (url.includes('youtu.be/')) videoId = url.split('/').pop().split('?')[0];
-
-            if (videoId) {
+            // 1. YouTube Shorts (https://youtube.com/shorts/VIDEO_ID)
+            if (url.includes('shorts/')) {
+                const videoId = url.split('shorts/')[1].split('?')[0];
                 return `https://www.youtube.com/embed/${videoId}`;
             }
+            // 2. YouTube Tavavideo (https://www.youtube.com/watch?v=VIDEO_ID)
+            if (url.includes('v=')) {
+                const videoId = url.split('v=')[1].split('&')[0];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            // 3. YouTube lühilink (https://youtu.be/VIDEO_ID)
+            if (url.includes('youtu.be/')) {
+                const videoId = url.split('/').pop().split('?')[0];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            // 4. JUBA VALMIS MANUSTUSLINK (Facebook, YouTube embed jne)
+            // Kui kasutaja paneb tabelisse juba iframe src="..." sisu
+            if (url.includes('/embed/') || url.includes('plugins/video.php')) {
+                return url; 
+            }
 
+            // Kui ükski tingimus ei sobi, tagastame nulli, et katkiseid videoid ei ilmuks
             return null;
         }
 
