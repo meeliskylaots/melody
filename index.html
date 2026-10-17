@@ -196,6 +196,14 @@
             .hero-actions > button { white-space: normal; }
             .phone-button-text > span:last-child { font-size: 10px; }
         }
+
+        #video-grid { align-items: flex-start; }
+        .video-card.video-portrait { flex: 0 0 200px; }
+        .video-card.video-landscape { flex: 0 0 min(420px, 100%); }
+        @media (max-width: 639px) {
+            .video-card.video-portrait { flex-basis: 180px; }
+            .video-card.video-landscape { flex-basis: min(320px, 100%); }
+        }
     </style>
 </head>
 
@@ -339,9 +347,15 @@
 
         function scrollVideos(direction) {
             const grid = document.getElementById('video-grid');
-            const cardWidth = window.innerWidth < 640 ? 200 : 240;
-            const gap = 16;
-            grid.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' });
+            const cards = [...grid.querySelectorAll('.video-card')];
+            if (!cards.length) return;
+            const origin = cards[0].offsetLeft;
+            const positions = cards.map(card => card.offsetLeft - origin);
+            const current = grid.scrollLeft;
+            const target = direction > 0
+                ? positions.find(position => position > current + 4)
+                : positions.slice().reverse().find(position => position < current - 4);
+            grid.scrollTo({ left: target === undefined ? (direction > 0 ? grid.scrollWidth : 0) : target, behavior: 'smooth' });
         }
 
         function getDriveDirectLink(id) {
@@ -421,6 +435,26 @@
             return null;
         }
 
+
+        function getVideoAspectRatio(item) {
+            const url = item.url || '';
+            const format = (item.format || item.aspect_ratio || '').trim().toLowerCase();
+            if (format === 'portrait' || format === 'püst' || format === '9:16') return '9 / 16';
+            if (format === 'landscape' || format === 'rõht' || format === '16:9') return '16 / 9';
+            if (url.includes('shorts/')) return '9 / 16';
+            // This existing YouTube clip is portrait, despite using a regular share link.
+            if (url.includes('95kOX4RRxXQ')) return '3 / 4';
+            if (url.includes('plugins/video.php')) {
+                try {
+                    const params = new URL(url).searchParams;
+                    const width = Number(params.get('width'));
+                    const height = Number(params.get('height'));
+                    if (width > 0 && height > 0) return width + ' / ' + height;
+                } catch (error) { /* Fall back to a standard landscape player. */ }
+            }
+            return '16 / 9';
+        }
+
         function parseEeDate(dateStr) {
             const m = (dateStr || '').trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
             if (!m) return null;
@@ -492,9 +526,12 @@
 
                     if (embedUrl) {
                         videoCount++;
+                        const aspectRatio = getVideoAspectRatio(item);
+                        const dimensions = aspectRatio.split('/').map(Number);
+                        const isPortrait = dimensions[0] < dimensions[1];
                         videoGrid.innerHTML += `
-                            <div class="video-card">
-                                <div class="video-wrapper bg-black/50 shadow-lg ring-1 ring-white/10">
+                            <div class="video-card ${isPortrait ? 'video-portrait' : 'video-landscape'}">
+                                <div class="video-wrapper bg-black/50 shadow-lg ring-1 ring-white/10" style="aspect-ratio: ${aspectRatio}">
                                     <iframe
                                         src="${embedUrl}"
                                         title="${title || 'Ansambel Melody video'}"
