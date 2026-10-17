@@ -219,6 +219,18 @@
         #performance-dialog form button { min-height: 44px; padding: 8px 12px; }
         #performance-player iframe { display: block; width: 100%; height: 100%; border: 0; }
         @media (max-width: 639px) { .video-card.video-preview-card { flex-basis: 180px; } }
+
+        .hero-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; max-width: 520px; align-items: stretch; }
+        .hero-actions > .contact-button { display: flex; align-items: center; justify-content: center; height: 52px; min-height: 52px; box-sizing: border-box; padding: 8px 6px; border: 1px solid rgba(255,255,255,.5); border-radius: 10px; background: rgba(0,0,0,.45); color: #fff; font-family: inherit; font-size: 13px; font-weight: 700; line-height: 1.25; text-align: center; white-space: normal; cursor: pointer; transition: background .2s, border-color .2s; }
+        .hero-actions > .contact-button:hover { background: rgba(255,255,255,.14); border-color: white; }
+        .hero-actions > .contact-button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+        .hero-actions .phone-button-text { gap: 3px; }
+        .hero-actions .phone-button-text > span:last-child { font-size: 11px; font-weight: 400; }
+        @media (max-width: 420px) {
+            .hero-actions { gap: 6px; }
+            .hero-actions > .contact-button { font-size: 11px; padding-inline: 4px; }
+            .hero-actions .phone-button-text > span:last-child { font-size: 9px; }
+        }
     </style>
 </head>
 
@@ -250,20 +262,20 @@
             </p>
             <div class="hero-actions">
                 <button type="button" onclick="document.getElementById('quote-dialog').showModal()" aria-haspopup="dialog"
-                    class="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-white px-6 py-3 text-base font-bold text-black transition hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    class="contact-button"
                 >
                     Küsi pakkumist
                 </button>
                 <a
                     href="https://wa.me/3725259576?text=Tere!%20Soovin%20k%C3%BCsida%20Melody%20esinemispakkumist.%0APeo%20kuup%C3%A4ev%3A%20%0APeo%20koht%3A%20%0AS%C3%BCndmuse%20t%C3%BC%C3%BCp%3A%20"
                     target="_blank" rel="noopener noreferrer"
-                    class="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/40 bg-black/40 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    class="contact-button"
                 >
                     WhatsApp
                 </a>
                 <a
                     href="tel:+37256608062" aria-label="Helista numbrile +372 5660 8062" title="+372 5660 8062"
-                    class="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/40 bg-black/40 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    class="contact-button"
                 >
                     <span class="phone-button-text"><span>Helista</span><span>+372 5660 8062</span></span>
                 </a>
