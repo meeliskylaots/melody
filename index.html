@@ -189,6 +189,11 @@
         .faq-item[open] summary::after { background: linear-gradient(currentColor, currentColor) center / 12px 1px no-repeat; }
         .faq-item summary:focus-visible { outline: 2px solid white; outline-offset: 3px; border-radius: 10px; }
         .faq-item p { margin: 0; padding: 0 16px 16px; color: #d1d2d5; line-height: 1.8; }
+        @media (hover: hover) and (pointer: fine) {
+            .faq-item { position: relative; }
+            .faq-item:not([open]) > p { display: block; position: absolute; z-index: 20; top: calc(100% + 8px); left: 0; right: 0; max-height: min(40vh, 20rem); overflow-y: auto; padding: 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 14px; background: #171717; box-shadow: 0 12px 32px rgba(0,0,0,.55); visibility: hidden; opacity: 0; transform: translateY(-4px); transition: opacity .16s ease, transform .16s ease, visibility .16s; }
+            .faq-item:not([open]):hover > p, .faq-item:not([open]):focus-within > p { visibility: visible; opacity: 1; transform: translateY(0); }
+        }
         @media (max-width: 767px) {
             .hero-title { font-size: 32px; }
             .intro-panel { padding: 22px 20px; }
