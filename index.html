@@ -181,6 +181,14 @@
         .page-content .intro-title { font-size: 29px; margin: 0 0 18px; color: #f5f2ec; }
         .intro-lead { color: #d1d2d5; font-size: 15px; line-height: 1.85; margin-bottom: 16px; }
         .intro-note { color: #a4a6ad; font-size: 14px; line-height: 1.8; }
+        .faq-list { display: grid; gap: 10px; }
+        .faq-item { border: 1px solid rgba(255,255,255,.09); border-radius: 14px; background: rgba(255,255,255,.025); }
+        .faq-item summary { position: relative; padding: 16px 44px 16px 16px; color: #f5f2ec; font-weight: 700; line-height: 1.5; cursor: pointer; list-style: none; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: ""; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; color: #d1d2d5; background: linear-gradient(currentColor, currentColor) center / 12px 1px no-repeat, linear-gradient(currentColor, currentColor) center / 1px 12px no-repeat; }
+        .faq-item[open] summary::after { background: linear-gradient(currentColor, currentColor) center / 12px 1px no-repeat; }
+        .faq-item summary:focus-visible { outline: 2px solid white; outline-offset: 3px; border-radius: 10px; }
+        .faq-item p { margin: 0; padding: 0 16px 16px; color: #d1d2d5; line-height: 1.8; }
         @media (max-width: 767px) {
             .hero-title { font-size: 32px; }
             .intro-panel { padding: 22px 20px; }
@@ -355,6 +363,45 @@
                 <p class="text-gray-300 text-sm leading-relaxed">
                     Hea pidu ei käi valmis playlisti järgi. Mõni hetk vajab lugu, mille refrääni laulavad kõik, järgmine rohkem hoogu või rahulikumat tempot. Meie tabame õige loo õigel hetkel ja hoiame õhtu mõnusalt liikumises. Meie soov on jagada inimestega head muusikat, positiivset energiat ja rõõmu koos veedetud ajast.
                 </p>
+            </section>
+
+            <!-- KORDUMA KIPPUVAD KÜSIMUSED -->
+            <section id="faq" aria-labelledby="faq-title">
+                <h2 id="faq-title" class="mb-4">Korduma kippuvad küsimused</h2>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>Millist muusikat ansambel Melody mängib?</summary>
+                        <p>Meie repertuaaris on tuntud Eesti ja välismaa tantsulood eri aegadest. Mängime muusikat, mis sobib erineva maitse ja vanusega publikule. Arvestame peo iseloomu ja inimeste soovidega.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Millistele sündmustele ansambel Melody sobib?</summary>
+                        <p>Esineme rahvamajade ja kultuurimajade tantsuõhtutel, pulmades, sünnipäevadel, juubelitel, ettevõtete pidudel, suvepäevadel ja teistel sündmustel, kus soovitakse head tantsumuusikat ja mõnusat meeleolu.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Kas ansambel Melody esineb otse?</summary>
+                        <p>Jah, laulame ja mängime kitarre otse, kasutades saateks fonogramme. Nii saame kahemeheansamblina pakkuda mitmekülgset ja täidlase kõlaga tantsumuusikat. Meie esinemisvideod on salvestatud päris pidudel, ilma lavastuseta.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Kui kaua ansambel Melody esineb?</summary>
+                        <p>Tavapärane esinemiskava on 3 × 40 või 4 × 30 minutit. Oleme paindlikud ja lepime täpse ajakava kokku vastavalt peo iseloomule ja korraldaja soovidele.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Kas ansamblil on oma heli- ja valgustehnika?</summary>
+                        <p>Jah, meil on olemas oma heli- ja valgustehnika. Toome vajaliku tehnika ise kohale ning hoolitseme selle paigaldamise ja esinemise tehnilise poole eest.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Kas ansambel Melody esineb üle Eesti?</summary>
+                        <p>Jah, tuleme esinema üle Eesti. Anna meile teada peo toimumise koht ja kuupäev ning leiame sobiva lahenduse.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Kui palju ansambli tellimine maksab?</summary>
+                        <p>Esinemise hind sõltub peo toimumise kohast ja kokkulepitud tingimustest. Võta meiega ühendust ning teeme sinu sündmusele pakkumise.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Miks kutsuda oma peole ansambel Melody?</summary>
+                        <p>Meie soov on pakkuda ja jagada inimestega head muusikaelamust ning positiivset energiat. Suhtleme publikuga, arvestame peo eripäraga ja oleme korralduses paindlikud. Tahame, et inimesed tunneksid end hästi, naudiksid muusikat ja lahkuksid peolt heade emotsioonidega.</p>
+                    </details>
+                </div>
             </section>
 
             <!-- GALERII -->
