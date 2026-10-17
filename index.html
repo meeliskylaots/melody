@@ -147,6 +147,21 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
+
+        #quote-dialog { margin: auto; width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; padding: 24px; border: 1px solid #444; border-radius: 20px; background: #151515; color: white; }
+        #quote-dialog::backdrop { background: rgba(0,0,0,.8); }
+        .quote-close { display: flex; justify-content: flex-end; }
+        .quote-close button { min-height: 44px; padding: 8px 12px; }
+        #quote-title { font-size: 26px; font-weight: 700; margin-bottom: 12px; }
+        #quote-help, .quote-recipient { color: #d1d5db; margin-bottom: 16px; }
+        .quote-recipient a { text-decoration: underline; overflow-wrap: anywhere; }
+        #quote-dialog label { display: block; margin-bottom: 8px; font-weight: 700; }
+        #quote-message { display: block; width: 100%; box-sizing: border-box; background: #080808; color: white; border: 1px solid #666; border-radius: 10px; padding: 12px; font: inherit; font-size: 16px; resize: vertical; }
+        .quote-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+        .quote-actions a, .quote-actions button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #666; border-radius: 10px; padding: 10px 14px; }
+        #quote-gmail { background: white; color: black; font-weight: 700; }
+        #quote-dialog :focus-visible { outline: 2px solid white; outline-offset: 3px; }
+        #quote-status { color: #d1d5db; margin-top: 12px; font-size: 14px; }
     </style>
 </head>
 
@@ -177,12 +192,11 @@
                 Peobänd pulma, sünnipäevale ja tantsuõhtule
             </p>
             <div class="mt-6 flex flex-wrap items-center gap-3">
-                <a
-                    href="mailto:ansambelmelody@gmail.com?subject=Pakkumise%20p%C3%A4ring%20%E2%80%93%20Ansambel%20Melody&amp;body=Tere!%0D%0A%0D%0ASoovin%20k%C3%BCsida%20pakkumist%20Ansambel%20Melody%20esinemiseks.%0D%0A%0D%0APeo%20kuup%C3%A4ev%3A%20%0D%0APeo%20koht%3A%20%0D%0AS%C3%BCndmuse%20t%C3%BC%C3%BCp%3A%20%0D%0A%0D%0ALisainfo%20v%C3%B5i%20soovid%3A%20%0D%0A%0D%0ANimi%3A%20%0D%0ATelefon%3A%20"
+                <button type="button" onclick="document.getElementById('quote-dialog').showModal()" aria-haspopup="dialog"
                     class="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-white px-6 py-3 text-base font-bold text-black transition hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
                     Küsi pakkumist
-                </a>
+                </button>
                 <a
                     href="tel:+37256608062"
                     class="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/40 bg-black/40 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
@@ -208,31 +222,6 @@
                 <p class="text-gray-400 leading-relaxed">
                     Kui otsid oma sündmusele ansamblit, kes hoiaks peo käimas ja looks hea õhkkonna, võta ühendust ja küsi pakkumist.
                 </p>
-            </section>
-
-            <!-- KONTAKT -->
-            <section id="contact" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a href="tel:+37256608062" class="glass-panel p-4 rounded-2xl flex items-center gap-4 hover:bg-white/5 transition group">
-                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white group-hover:text-black transition">
-                        <i data-lucide="phone"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">Helista</p>
-                        <p class="font-medium text-base">+372 5660 8062</p>
-                    </div>
-                </a>
-
-                <a href="mailto:ansambelmelody@gmail.com" class="glass-panel p-4 rounded-2xl flex items-center gap-4 hover:bg-white/5 transition group">
-                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white group-hover:text-black transition">
-                        <i data-lucide="mail"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">Kirjuta</p>
-                        <p class="font-medium text-sm sm:text-base whitespace-nowrap overflow-hidden text-ellipsis">
-                            ansambelmelody@gmail.com
-                        </p>
-                    </div>
-                </a>
             </section>
 
             <!-- VIDEOD -->
@@ -545,5 +534,53 @@
             lucide.createIcons();
         });
     </script>
+
+    <dialog id="quote-dialog" aria-labelledby="quote-title" aria-describedby="quote-help">
+        <form method="dialog" class="quote-close"><button aria-label="Sulge päringuaken">Sulge ×</button></form>
+        <h2 id="quote-title">Küsi pakkumist</h2>
+        <p id="quote-help">Täienda päringut ja ava see oma e-postis. Kirja saadad e-postist ise.</p>
+        <p class="quote-recipient">Saaja: <a href="mailto:ansambelmelody@gmail.com">ansambelmelody@gmail.com</a></p>
+        <label for="quote-message">Sinu päring</label>
+        <textarea id="quote-message" rows="11" oninput="updateQuoteLinks()">Tere!
+
+Soovin küsida pakkumist Ansambel Melody esinemiseks.
+
+Peo kuupäev:
+Peo koht:
+Sündmuse tüüp:
+
+Lisainfo või soovid:
+
+Nimi:
+Telefon:</textarea>
+        <div class="quote-actions">
+            <a id="quote-gmail" target="_blank" rel="noopener noreferrer">Ava Gmailis</a>
+            <a id="quote-email">Ava e-postirakenduses</a>
+            <button type="button" onclick="copyQuote()">Kopeeri päring</button>
+        </div>
+        <p id="quote-status" role="status" aria-live="polite"></p>
+    </dialog>
+    <script>
+        function updateQuoteLinks() {
+            const subject = encodeURIComponent('Pakkumise päring – Ansambel Melody');
+            const body = encodeURIComponent(document.getElementById('quote-message').value);
+            document.getElementById('quote-email').href = 'mailto:ansambelmelody@gmail.com?subject=' + subject + '&body=' + body;
+            document.getElementById('quote-gmail').href = 'https://mail.google.com/mail/?view=cm&fs=1&to=ansambelmelody%40gmail.com&su=' + subject + '&body=' + body;
+        }
+        async function copyQuote() {
+            const message = document.getElementById('quote-message');
+            const status = document.getElementById('quote-status');
+            try {
+                await navigator.clipboard.writeText(message.value);
+                status.textContent = 'Päring kopeeritud. Kleebi see oma e-kirja ja saada aadressile ansambelmelody@gmail.com.';
+            } catch (error) {
+                message.focus();
+                message.select();
+                status.textContent = 'Kopeeri valitud tekst ja saada see aadressile ansambelmelody@gmail.com.';
+            }
+        }
+        updateQuoteLinks();
+    </script>
+
 </body>
 </html>
