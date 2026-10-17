@@ -139,10 +139,6 @@
             animation: marquee 35s linear infinite;
         }
 
-        .marquee-content:hover {
-            animation-play-state: paused;
-        }
-
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -627,5 +623,27 @@ Telefon:</textarea>
         updateQuoteLinks();
     </script>
 
+
+    <script>
+        const eventsMarquee = document.getElementById('events-list');
+        const eventsTrack = eventsMarquee.closest('.marquee-container');
+        let eventsHovered = false;
+        function updateEventsSpeed() {
+            const focused = eventsTrack.contains(document.activeElement);
+            const rate = eventsHovered || focused ? 0.2 : 1;
+            eventsMarquee.getAnimations().forEach(animation => animation.updatePlaybackRate(rate));
+        }
+        eventsTrack.addEventListener('pointerenter', event => {
+            if (event.pointerType === 'touch') return;
+            eventsHovered = true;
+            updateEventsSpeed();
+        });
+        eventsTrack.addEventListener('pointerleave', () => {
+            eventsHovered = false;
+            updateEventsSpeed();
+        });
+        eventsTrack.addEventListener('focusin', updateEventsSpeed);
+        eventsTrack.addEventListener('focusout', () => requestAnimationFrame(updateEventsSpeed));
+    </script>
 </body>
 </html>
