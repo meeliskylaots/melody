@@ -175,6 +175,22 @@
             .hero-actions > a, .hero-actions > button { padding: 8px 9px; font-size: 12px; }
             .hero-title { font-size: 30px; }
         }
+
+        /* Rahulik tüpograafia ja taastatud tutvustus */
+        .hero-title { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: clamp(32px, 3.6vw, 56px); letter-spacing: -.035em; line-height: 1.1; text-wrap: balance; }
+        .hero-names { font-weight: 400; font-size: 10px; letter-spacing: .18em; line-height: 1.6; }
+        .page-content { font-size: 15px; line-height: 1.8; gap: 32px; }
+        .page-content h2, .page-content h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: 25px; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; }
+        .intro-panel { padding: 26px 28px; border: 1px solid rgba(255,255,255,.09); border-radius: 18px; background: rgba(255,255,255,.025); }
+        .page-content .intro-title { font-size: 29px; margin: 0 0 18px; color: #f5f2ec; }
+        .intro-lead { color: #d1d2d5; font-size: 15px; line-height: 1.85; margin-bottom: 16px; }
+        .intro-note { color: #a4a6ad; font-size: 14px; line-height: 1.8; }
+        @media (max-width: 767px) {
+            .hero-title { font-size: 32px; }
+            .intro-panel { padding: 22px 20px; }
+            .page-content .intro-title { font-size: 25px; }
+            .page-content h2, .page-content h3 { font-size: 23px; }
+        }
     </style>
 </head>
 
@@ -232,16 +248,24 @@
         <div class="page-content p-5 md:p-8 max-w-2xl mx-auto flex flex-col gap-6">
 
             <!-- SISSEJUHATUS -->
-            <section aria-label="Ansambli tutvustus">
-                <p class="text-gray-300 leading-relaxed">Oleme kahemehe peobänd. Mängime eesti ja maailma hitte pulmades, sünnipäevadel, suve- ja firmapidudel ning tantsuõhtutel üle Eesti.</p>
+            <section class="intro-panel">
+                <h2 class="intro-title">
+                    Ansambel pulma, sünnipäevale ja tantsuõhtule
+                </h2>
+                <p class="intro-lead">
+                    Ansambel Melody on kahemehe peobänd, kes esineb pulmas, sünnipäeval, suvepeol, firmapeol ja tantsuõhtul üle Eesti. Mängime eesti ja maailma hitte ning loome peole elava meeleolu, vahetu kontakti ja tantsitava õhtu.
+                </p>
+                <p class="intro-note">
+                    Kui otsid oma sündmusele ansamblit, kes hoiaks peo käimas ja looks hea õhkkonna, võta ühendust ja küsi pakkumist.
+                </p>
             </section>
 
             <!-- VIDEOD -->
             <section>
                 <div class="mb-5 px-1">
-                    <h3 class="text-xl font-bold mb-3">Vaata ja kuula meid</h3>
+                    <h3 class="text-xl font-bold mb-3">Me võime ju rääkida, aga parem vaata ise</h3>
                     <p class="text-gray-400 leading-relaxed mb-3">
-                        Päris hetked meie esinemistelt.
+                        Siin on mõned päris hetked meie esinemistelt. Otse peolt, ilma suure lavastuseta.
                     </p>
                     <a href="https://www.youtube.com/@ansambelMelody" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-400 hover:text-white inline-flex items-center gap-1">
                         YouTube kanal <i data-lucide="external-link" class="w-4 h-4"></i>
