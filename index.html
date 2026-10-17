@@ -191,6 +191,15 @@
             .page-content .intro-title { font-size: 25px; }
             .page-content h2, .page-content h3 { font-size: 23px; }
         }
+
+        .phone-button-text { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+        .phone-button-text > span:last-child { white-space: nowrap; font-size: 11px; font-weight: 400; }
+        @media (max-width: 1023px) {
+            .hero-actions { gap: 6px; }
+            .hero-actions > a, .hero-actions > button { padding: 8px 6px; font-size: 11px; }
+            .hero-actions > button { white-space: normal; }
+            .phone-button-text > span:last-child { font-size: 10px; }
+        }
     </style>
 </head>
 
@@ -237,7 +246,7 @@
                     href="tel:+37256608062" aria-label="Helista numbrile +372 5660 8062" title="+372 5660 8062"
                     class="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/40 bg-black/40 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
-                    Helista
+                    <span class="phone-button-text"><span>Helista</span><span>+372 5660 8062</span></span>
                 </a>
             </div>
         </div>
